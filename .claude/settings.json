@@ -22,7 +22,11 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5002/template-a.html)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5002/template-d.html)",
       "Bash(kill %1)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(sed -i '' 's|href=\"styles-a.css\"|href=\"css/styles-a.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-a.html)",
+      "Bash(sed -i '' 's|href=\"styles-b.css\"|href=\"css/styles-b.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-b.html)",
+      "Bash(sed -i '' 's|href=\"styles-c.css\"|href=\"css/styles-c.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-c.html)",
+      "Bash(sed -i '' 's|href=\"styles-d.css\"|href=\"css/styles-d.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-d.html)"
     ]
   }
 }

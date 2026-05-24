@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>김철수 ♡ 안영희 · 모바일 청첩장 (Editorial)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="styles-c.css" />
+<script>
+  window.INVITE = {
+    groom: { name: '김철수', father: '김재혁', mother: '박서영', order: '장남' },
+    bride: { name: '안영희', father: '안정훈', mother: '이은주', order: '장녀' },
+    date: new Date('2026-11-14T15:30:00+09:00'),
+    venue: {
+      name: '더채플앳청담', hall: '5F 채플홀',
+      address: '서울특별시 강남구 도산대로 442',
+      lat: 37.5247, lng: 127.0428,
+    },
+    shareUrl: 'https://invite.wedding/cheolsu-younghee',
+  };
+</script>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="topbar">
+    <button class="btn-large-text" id="largeTextToggle" type="button" aria-pressed="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 7h8M7 7v12M14 11h6M17 11v8M3 4h8M14 8h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>큰글씨</span>
+    </button>
+    <button class="btn-share-icon" id="shareTopBtn" type="button" aria-label="공유하기">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.5" stroke="currentColor" stroke-width="1.4"/><circle cx="18" cy="6" r="2.5" stroke="currentColor" stroke-width="1.4"/><circle cx="18" cy="18" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </button>
+  </header>
+
+  <!-- HERO — magazine cover style -->
+  <section class="hero">
+    <div class="hero-meta">
+      <div class="issue">An invitation</div>
+      <div class="date-tag" data-date-ymd>2026. 11. 14</div>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="ht-line">저희</span>
+      <span class="ht-line ht-italic">결혼</span>
+      <span class="ht-line">합니다.</span>
+    </h1>
+
+    <div class="hero-photo">
+      <img src="https://picsum.photos/seed/wed-c-hero/700/900" alt="신랑 신부" />
+    </div>
+
+    <div class="hero-names">
+      <div class="hn-row">
+        <span class="hn-label">신랑</span>
+        <span class="hn-name" data-groom-name>김철수</span>
+      </div>
+      <div class="hn-row">
+        <span class="hn-label">신부</span>
+        <span class="hn-name" data-bride-name>안영희</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT BLOCK — replaces calendar -->
+  <section class="stats">
+    <div class="stat-row">
+      <div class="stat-key">일시</div>
+      <div class="stat-val"><span data-date-full>2026년 11월 14일 토요일</span></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-key">시간</div>
+      <div class="stat-val"><span data-time-ko>오후 3시 30분</span></div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-key">장소</div>
+      <div class="stat-val">더채플앳청담 — 5F 채플홀</div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-key">드레스</div>
+      <div class="stat-val">세미포멀</div>
+    </div>
+  </section>
+
+  <!-- GREETING — editorial body -->
+  <section class="greeting">
+    <div class="g-eyebrow">— 01</div>
+    <h2 class="g-title">초대의 글</h2>
+    <p class="g-body">서로 마주보며 다져온 사랑을 이제 함께<br />
+한 곳을 바라보며 걸어갈 수 있는 큰 사랑으로<br />
+키우고자 합니다. 저희 두 사람이 사랑의 이름으로<br />
+지켜나갈 수 있게 앞날을 축복해 주시면 감사하겠습니다.</p>
+
+    <div class="parents">
+      <div class="p-col">
+        <div class="p-label">신랑</div>
+        <div class="p-parents">김재혁 · 박서영</div>
+        <div class="p-name">의 장남 <strong>김철수</strong></div>
+      </div>
+      <div class="p-col">
+        <div class="p-label">신부</div>
+        <div class="p-parents">안정훈 · 이은주</div>
+        <div class="p-name">의 장녀 <strong>안영희</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASYMMETRIC GALLERY (9장 매거진 컬라주) -->
+  <section class="gallery">
+    <div class="g-eyebrow">— 02</div>
+    <h2 class="g-title">순간들</h2>
+    <div class="g-grid">
+      <img class="g-big" src="https://picsum.photos/seed/wed-c-1/640/800" alt="" loading="lazy" />
+      <img class="g-sm" src="https://picsum.photos/seed/wed-c-2/500/500" alt="" loading="lazy" />
+      <img class="g-sm" src="https://picsum.photos/seed/wed-c-3/500/500" alt="" loading="lazy" />
+      <img class="g-wide" src="https://picsum.photos/seed/wed-c-4/900/500" alt="" loading="lazy" />
+      <img class="g-sm" src="https://picsum.photos/seed/wed-c-5/500/500" alt="" loading="lazy" />
+      <img class="g-tall" src="https://picsum.photos/seed/wed-c-6/500/700" alt="" loading="lazy" />
+      <img class="g-sm" src="https://picsum.photos/seed/wed-c-7/500/500" alt="" loading="lazy" />
+      <img class="g-sm" src="https://picsum.photos/seed/wed-c-8/500/500" alt="" loading="lazy" />
+      <img class="g-wide" src="https://picsum.photos/seed/wed-c-9/900/500" alt="" loading="lazy" />
+    </div>
+    <div class="g-foot-mark">— 9장의 순간 —</div>
+  </section>
+
+  <!-- mini hidden calendar (kept for JS, hidden via CSS) -->
+  <div class="calendar-hidden">
+    <div id="calGrid"></div>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown">
+    <div class="g-eyebrow">— 03</div>
+    <h2 class="g-title">결혼식까지</h2>
+
+    <div class="cd-grid">
+      <div class="cd-cell">
+        <div class="cd-num" id="cdDays">00</div>
+        <div class="cd-label">일</div>
+      </div>
+      <div class="cd-cell">
+        <div class="cd-num" id="cdHours">00</div>
+        <div class="cd-label">시간</div>
+      </div>
+      <div class="cd-cell">
+        <div class="cd-num" id="cdMin">00</div>
+        <div class="cd-label">분</div>
+      </div>
+      <div class="cd-cell">
+        <div class="cd-num" id="cdSec">00</div>
+        <div class="cd-label">초</div>
+      </div>
+    </div>
+    <div class="cd-foot" id="cdDday">D-—</div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location">
+    <div class="g-eyebrow">— 04</div>
+    <h2 class="g-title">오시는 길</h2>
+    <div class="venue-name">더채플앳청담</div>
+    <div class="venue-hall">5F · 채플홀</div>
+
+    <div class="map">
+      <svg viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <rect width="320" height="160" fill="#F4F1EC"/>
+        <path d="M0 120 Q 80 80 160 90 T 320 60" stroke="#D5CFC4" stroke-width="6" fill="none"/>
+        <path d="M0 120 Q 80 80 160 90 T 320 60" stroke="#fff" stroke-width="2" stroke-dasharray="6 6" fill="none"/>
+        <path d="M40 0 L 60 160" stroke="#E2DCD0" stroke-width="4" fill="none"/>
+        <path d="M220 0 L 240 160" stroke="#E2DCD0" stroke-width="4" fill="none"/>
+      </svg>
+      <div class="map-pin">
+        <div class="pin-bubble">더채플앳청담</div>
+        <div class="pin-tri"></div>
+        <div class="pin-dot"></div>
+      </div>
+    </div>
+
+    <div class="address">
+      <span id="addressText">서울특별시 강남구 도산대로 442</span>
+      <button class="address-copy" id="copyAddressBtn" type="button"><span class="copy-label">복사</span></button>
+    </div>
+
+    <div class="map-links-row">
+      <button class="map-btn" type="button" data-map="naver"><div class="logo logo-naver">N</div><div class="map-btn-label">네이버지도</div></button>
+      <button class="map-btn" type="button" data-map="kakao"><div class="logo logo-kakao">K</div><div class="map-btn-label">카카오맵</div></button>
+      <button class="map-btn" type="button" data-map="tmap"><div class="logo logo-tmap">T</div><div class="map-btn-label">티맵</div></button>
+    </div>
+
+    <div class="transport">
+      <div class="transport-row"><div class="transport-label">지하철</div><div class="transport-text">7호선 청담역 13번 출구 도보 8분</div></div>
+      <div class="transport-row"><div class="transport-label">버스</div><div class="transport-text">간선 360, 江南05 → 청담사거리</div></div>
+      <div class="transport-row"><div class="transport-label">주차</div><div class="transport-text">건물 지하 2시간 무료 / 발렛 가능</div></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <h2 class="foot-title">
+      <span data-groom-name>김철수</span>
+      <span class="and">&amp;</span>
+      <span data-bride-name>안영희</span>
+    </h2>
+    <p class="foot-msg">저희의 새로운 시작에 함께해 주세요.</p>
+    <button class="btn-share-cta" id="shareBottomBtn" type="button">
+      <span>청청장 공유하기</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </footer>
+</div>
+
+<!-- modals -->
+<div class="modal share-modal" id="shareModal" hidden>
+  <div class="modal-overlay" data-close></div>
+  <div class="share-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><h3>공유하기</h3><button class="sheet-close" type="button" data-close>×</button></div>
+    <div class="share-options">
+      <button class="share-opt" type="button" data-share="kakao"><div class="share-logo kakao">K</div><div class="share-label">카카오톡</div></button>
+      <button class="share-opt" type="button" data-share="sms"><div class="share-logo sms">Msg</div><div class="share-label">문자</div></button>
+      <button class="share-opt" type="button" data-share="mail"><div class="share-logo mail">@</div><div class="share-label">메일</div></button>
+      <button class="share-opt" type="button" data-share="more"><div class="share-logo more">···</div><div class="share-label">더보기</div></button>
+    </div>
+    <div class="share-url">
+      <div class="url-text" id="shareUrl">https://invite.wedding/cheolsu-younghee</div>
+      <button class="url-copy" id="copyUrlBtn" type="button">복사</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal map-modal" id="mapModal" hidden>
+  <div class="modal-overlay" data-close></div>
+  <div class="map-toast">
+    <h3 class="mt-title"><span id="mtAppName">앱</span> 열기</h3>
+    <p class="mt-body">설치된 앱에서 길찾기를 시작합니다. 앱이 없으면 웹 지도로 연결됩니다.</p>
+    <div class="mt-code">
+      <div class="mt-code-label">딝링크</div><div id="mtDeeplink"></div>
+      <div class="mt-code-label" style="margin-top:8px">대체 경로</div><div id="mtFallback"></div>
+    </div>
+    <div class="mt-actions">
+      <button type="button" class="mt-cancel" data-close>취소</button>
+      <button type="button" class="mt-open" id="mtOpenBtn">열기</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="main.js"></script>
+</body>
+</html>

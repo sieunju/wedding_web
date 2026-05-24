@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(cp \"/Users/juhongmin/.claude/projects/-Users-juhongmin-Developer-wedding-web/5ccae98b-da57-4bdc-b41c-1df573891118/tool-results/webfetch-1779634380067-x4rzyb.bin\" /tmp/design.gz)",
+      "Bash(gunzip -c /tmp/design.gz)",
+      "Read(//private/tmp/**)",
+      "Bash(mkdir -p /tmp/design_extracted)",
+      "Bash(tar -xf /tmp/design_out.tar -C /tmp/design_extracted)",
+      "Read(//tmp/**)",
+      "Bash(cp /tmp/design_extracted/wedding-web-remix/project/dist/template-a/main.js /Users/juhongmin/Developer/wedding_web/public/main.js)",
+      "Bash(cp /tmp/design_extracted/wedding-web-remix/project/dist/template-a/styles.css /Users/juhongmin/Developer/wedding_web/public/styles-a.css)",
+      "Bash(cp /tmp/design_extracted/wedding-web-remix/project/dist/template-b/styles.css /Users/juhongmin/Developer/wedding_web/public/styles-b.css)",
+      "Bash(cp /tmp/design_extracted/wedding-web-remix/project/dist/template-c/styles.css /Users/juhongmin/Developer/wedding_web/public/styles-c.css)",
+      "Bash(cp /tmp/design_extracted/wedding-web-remix/project/dist/template-d/styles.css /Users/juhongmin/Developer/wedding_web/public/styles-d.css)",
+      "Bash(sed 's|href=\"styles.css\"|href=\"styles-a.css\"|' /tmp/design_extracted/wedding-web-remix/project/dist/template-a/index.html)",
+      "Bash(sed 's|href=\"styles.css\"|href=\"styles-b.css\"|' /tmp/design_extracted/wedding-web-remix/project/dist/template-b/index.html)",
+      "Bash(sed 's|href=\"styles.css\"|href=\"styles-c.css\"|' /tmp/design_extracted/wedding-web-remix/project/dist/template-c/index.html)",
+      "Bash(sed 's|href=\"styles.css\"|href=\"styles-d.css\"|' /tmp/design_extracted/wedding-web-remix/project/dist/template-d/index.html)",
+      "Bash(firebase emulators:start --only hosting)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5002/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5002/template-a.html)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5002/template-d.html)",
+      "Bash(kill %1)",
+      "Bash(git commit -m ' *)"
+    ]
+  }
+}

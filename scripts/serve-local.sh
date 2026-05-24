@@ -14,10 +14,9 @@ fi
 echo "📦 Functions 환경 설정 복사 (local)..."
 cp functions/.env.local functions/.env
 
-# Firebase 에뮬레이터 실행
-echo "🔥 Firebase 에뮬레이터 실행..."
-echo "   Hosting : http://localhost:5000"
-echo "   Functions: http://localhost:5001"
-echo "   Firestore: http://localhost:8080"
+# Firebase Hosting 에뮬레이터만 실행 (Java 불필요)
+# Firestore/Functions 에뮬레이터는 Java 21+ 필요 — 운영 Firebase를 그대로 사용
+echo "🔥 Firebase Hosting 에뮬레이터 실행..."
+echo "   http://localhost:5000"
 echo ""
-firebase emulators:start
+firebase emulators:start --only hosting

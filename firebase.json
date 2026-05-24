@@ -1,18 +1,4 @@
 {
-  "functions": [
-    {
-      "source": "functions",
-      "codebase": "default",
-      "disallowLegacyRuntimeConfig": true,
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "*.local"
-      ]
-    }
-  ],
   "hosting": {
     "public": "public",
     "ignore": [
@@ -22,25 +8,9 @@
     ],
     "rewrites": [
       {
-        "source": "/manager/**",
-        "destination": "/manager/index.html"
-      },
-      {
         "source": "**",
         "destination": "/index.html"
       }
     ]
-  },
-  "remoteconfig": {
-    "template": "remoteconfig.template.json"
-  },
-  "firestore": {
-    "rules": "firestore.rules"
-  },
-  "database": {
-    "rules": "database.rules.json"
-  },
-  "auth": {
-    "providers": {}
   }
 }

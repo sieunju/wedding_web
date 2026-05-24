@@ -71,3 +71,8 @@ node_modules/
 # Claude Code internal files
 .agents/
 skills-lock.json
+
+# Functions 환경 변수 (실제 값은 커밋하지 않음)
+functions/.env
+functions/.env.local
+functions/.env.prod

@@ -36,15 +36,26 @@ async function resolveTemplate() {
   return null;
 }
 
-function showError() {
+function showError(msg) {
   document.getElementById('loading').style.display = 'none';
-  document.getElementById('error').style.display   = 'flex';
+  const el = document.getElementById('error');
+  el.style.display = 'flex';
+  if (msg) el.querySelector('div').textContent = msg;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  // 10초 타임아웃 — Firestore 미설정 시 무한 대기 방지
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('timeout')), 10000)
+  );
+
   try {
-    const data = await resolveTemplate();
-    if (!data) { showError(); return; }
+    const data = await Promise.race([resolveTemplate(), timeout]);
+
+    if (!data) {
+      showError('등록된 템플릿이 없습니다.\n/manager 에서 템플릿을 추가해 주세요.');
+      return;
+    }
 
     renderInvite(data);
     startCountdown(data.date);
@@ -53,7 +64,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('invite').classList.remove('hidden');
   } catch (e) {
-    console.error(e);
-    showError();
+    console.error('[app]', e);
+    const isTimeout = e.message === 'timeout';
+    showError(isTimeout
+      ? 'Firebase 연결 시간 초과\nFirebase Console에서 Firestore 데이터베이스를 생성해 주세요.'
+      : '청첩장을 불러올 수 없습니다.\n잠시 후 다시 시도해 주세요.'
+    );
   }
 });

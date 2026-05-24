@@ -34,6 +34,9 @@
   "remoteconfig": {
     "template": "remoteconfig.template.json"
   },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
   "database": {
     "rules": "database.rules.json"
   },

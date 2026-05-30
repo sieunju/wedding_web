@@ -18,8 +18,8 @@
 
   /* type */
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-serif: 'Noto Serif KR', serif;
-  --font-display: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  --font-serif: 'Pretendard', sans-serif;
+  --font-display: 'Pretendard', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* scale (큰글씨 모드 토글) */
@@ -859,3 +859,15 @@ svg { display: block; }
   0%   { opacity: 0; transform: scale(0.94); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+/* ─── 계좌 섹션 ─── */
+.acc-section { padding: 48px 24px; background: var(--bg-alt); text-align: center; }
+.acc-group { margin: 24px 0; text-align: left; }
+.acc-side-label { font-size: 11px; letter-spacing: 2px; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--divider); }
+.acc-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.acc-info { display: flex; flex-direction: column; gap: 2px; }
+.acc-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+.acc-bank { font-size: 12px; color: var(--text-secondary); }
+.acc-num  { font-size: 13px; color: var(--text-primary); letter-spacing: 0.5px; }
+.acc-copy { flex-shrink: 0; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface, #fff); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.acc-copy:active, .acc-copy.copied { background: var(--accent); color: #fff; border-color: var(--accent); }

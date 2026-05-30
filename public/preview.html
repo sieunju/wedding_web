@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>템플릿 미리보기</title>
+<style>
+  body { font-family: -apple-system, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+  h1 { font-size: 18px; margin-bottom: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 800px; }
+  .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .card iframe { width: 100%; height: 600px; border: none; }
+  .card-label { padding: 12px 16px; font-size: 14px; font-weight: 600; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+  .card-label a { font-size: 12px; color: #666; text-decoration: none; }
+</style>
+</head>
+<body>
+<h1>모바일 청첩장 — 템플릿 미리보기</h1>
+<div class="grid">
+  <div class="card">
+    <iframe src="/?t=a" loading="lazy"></iframe>
+    <div class="card-label">Template A — Minimal <a href="/?t=a" target="_blank">새 탭으로 열기</a></div>
+  </div>
+  <div class="card">
+    <iframe src="/?t=b" loading="lazy"></iframe>
+    <div class="card-label">Template B — Botanical <a href="/?t=b" target="_blank">새 탭으로 열기</a></div>
+  </div>
+  <div class="card">
+    <iframe src="/?t=c" loading="lazy"></iframe>
+    <div class="card-label">Template C — Editorial <a href="/?t=c" target="_blank">새 탭으로 열기</a></div>
+  </div>
+  <div class="card">
+    <iframe src="/?t=d" loading="lazy"></iframe>
+    <div class="card-label">Template D — Midnight <a href="/?t=d" target="_blank">새 탭으로 열기</a></div>
+  </div>
+</div>
+</body>
+</html>

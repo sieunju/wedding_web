@@ -4,17 +4,30 @@
    ================================================================= */
 
 const INVITE = window.INVITE || {
-  groom: { name: '김철수', father: '김재혁', mother: '박서영', order: '장남' },
-  bride: { name: '안영희', father: '안정훈', mother: '이은주', order: '장녀' },
+  groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
+  bride: { name: '이영희', father: '이대감', mother: '박소사', order: '장녀' },
   date: new Date('2026-11-14T15:30:00+09:00'),
   venue: {
-    name: '더채플앳청담',
-    hall: '5F 채플홀',
-    address: '서울특별시 강남구 도산대로 442',
-    lat: 37.5247,
-    lng: 127.0428,
+    name: '웨딩홀 이름',
+    hall: '그랜드볼룸',
+    address: '서울특별시 강남구 테헤란로 123',
+    lat: 37.5065,
+    lng: 127.0536,
   },
-  shareUrl: 'https://invite.wedding/cheolsu-younghee',
+  shareUrl: 'https://your-domain.com',
+  accounts: [
+    { side: '신랑', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
+    { side: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
+    { side: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
+  ],
+  photos: {
+    main: 'images/main.webp',
+    gallery: [
+      'images/gallery/01.webp','images/gallery/02.webp','images/gallery/03.webp',
+      'images/gallery/04.webp','images/gallery/05.webp','images/gallery/06.webp',
+      'images/gallery/07.webp','images/gallery/08.webp','images/gallery/09.webp',
+    ],
+  },
 };
 
 // ─── 상수 ────────────────────────────────────────────────────────
@@ -124,7 +137,7 @@ function setupLargeText() {
   });
 
   function apply() {
-    document.documentElement.style.setProperty('--scale', on ? '1.28' : '1');
+    document.documentElement.style.setProperty('--scale', on ? '1.35' : '1');
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
 }
@@ -322,9 +335,73 @@ document.addEventListener('keydown', e => {
   }
 });
 
+function preventPinchZoom() {
+  document.addEventListener('touchmove', e => {
+    if (e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
+}
+
+function showTemplateIndicator() {
+  const host = location.hostname;
+  if (host !== 'localhost' && host !== '127.0.0.1') return;
+  const link = document.querySelector('link[href*="styles-"]');
+  if (!link) return;
+  const m = link.href.match(/styles-([a-d])\.css/);
+  if (!m) return;
+  const pill = document.createElement('div');
+  pill.textContent = `Template ${m[1].toUpperCase()}`;
+  pill.style.cssText = 'position:fixed;bottom:16px;right:16px;background:rgba(0,0,0,0.65);color:#fff;padding:4px 10px;border-radius:999px;font-size:11px;font-family:monospace;letter-spacing:1px;z-index:9999;pointer-events:none;';
+  document.body.appendChild(pill);
+}
+
+function renderAccounts() {
+  const el = $('#accounts');
+  if (!el || !INVITE.accounts?.length) return;
+  const groups = {};
+  INVITE.accounts.forEach(a => {
+    if (!groups[a.side]) groups[a.side] = [];
+    groups[a.side].push(a);
+  });
+  el.innerHTML = Object.entries(groups).map(([side, list]) => `
+    <div class="acc-group">
+      <div class="acc-side-label">${side}측</div>
+      ${list.map(a => `
+        <div class="acc-row">
+          <div class="acc-info">
+            <span class="acc-name">${a.name}</span>
+            <span class="acc-bank">${a.bank}</span>
+            <span class="acc-num">${a.number}</span>
+          </div>
+          <button class="acc-copy" type="button" data-number="${a.number}">복사</button>
+        </div>`).join('')}
+    </div>`).join('');
+  el.querySelectorAll('.acc-copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.number);
+        btn.textContent = '복사됨';
+        setTimeout(() => { btn.textContent = '복사'; }, 1600);
+      } catch { showToast('복사에 실패했습니다'); }
+    });
+  });
+}
+
+function renderPhotos() {
+  const p = INVITE.photos;
+  if (!p) return;
+  if (p.main) $$('[data-photo="main"]').forEach(el => { el.src = p.main; });
+  (p.gallery || []).forEach((src, i) => {
+    $$(`[data-photo="gallery-${i + 1}"]`).forEach(el => { el.src = src; });
+  });
+}
+
 // ─── init ───────────────────────────────────────────────────────
 function init() {
+  preventPinchZoom();
+  showTemplateIndicator();
   renderCalendar();
+  renderAccounts();
+  renderPhotos();
   renderCountdown();
   setInterval(renderCountdown, 1000);
   setupLargeText();

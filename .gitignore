@@ -76,3 +76,14 @@ skills-lock.json
 functions/.env
 functions/.env.local
 functions/.env.prod
+
+# Firebase 프로젝트 설정 (본인 프로젝트 ID 포함 — 커밋하지 않음)
+.firebaserc
+
+# 개인 웨딩 사진 (오픈소스 배포 시 제외)
+public/images/*.webp
+public/images/*.jpg
+public/images/*.png
+public/images/gallery/*.webp
+public/images/gallery/*.jpg
+public/images/gallery/*.png

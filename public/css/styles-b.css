@@ -3,19 +3,19 @@
    더스티 피치 베이스 + 세이지 그린 액센트 + 캘리그래픽 타이포
    ================================================================= */
 :root {
-  --bg-base: #F5EDE3;
-  --bg-alt: #EFE6D9;
-  --bg-outer: #E5D9C6;
-  --surface: #FBF6EE;
-  --border: #E2D5C0;
-  --divider: #D6C7AE;
-  --text-primary: #3D3528;
-  --text-secondary: #6B5F4D;
-  --text-tertiary: #9C8C76;
-  --accent: #7A8A6A;        /* sage green */
-  --accent-warm: #B89B7F;
-  --sun: #C97B6A;
-  --sat: #8FA6A0;
+  --bg-base: #FBF7EA;
+  --bg-alt: #F2F4E6;
+  --bg-outer: #E7E3CE;
+  --surface: #FFFFFF;
+  --border: #E3E0C8;
+  --divider: #CDD6B8;
+  --text-primary: #4D5346;
+  --text-secondary: #6E7561;
+  --text-tertiary: #9AA088;
+  --accent: #7FBFA6;        /* mint */
+  --accent-warm: #EBC15E;   /* butter */
+  --sun: #E89A86;
+  --sat: #8FB6C4;
   --font-sans: 'Pretendard', -apple-system, system-ui, sans-serif;
   --font-serif: 'Pretendard', sans-serif;
   --font-script: 'Pretendard', sans-serif;
@@ -536,14 +536,159 @@ img { display: block; max-width: 100%; }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes popIn { 0% { opacity: 0; transform: scale(0.94); } 100% { opacity: 1; transform: scale(1); } }
 
-/* ─── 계좌 섹션 ─── */
-.acc-section { padding: 48px 24px; background: var(--bg-alt); text-align: center; }
-.acc-group { margin: 24px 0; text-align: left; }
-.acc-side-label { font-size: 11px; letter-spacing: 2px; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--divider); }
-.acc-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-.acc-info { display: flex; flex-direction: column; gap: 2px; }
-.acc-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.acc-bank { font-size: 12px; color: var(--text-secondary); }
-.acc-num  { font-size: 13px; color: var(--text-primary); letter-spacing: 0.5px; }
-.acc-copy { flex-shrink: 0; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface, #fff); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: background 0.15s, color 0.15s; }
-.acc-copy:active, .acc-copy.copied { background: var(--accent); color: #fff; border-color: var(--accent); }
+/* ──── ACCOUNTS · 마음 전하실 곳 ──── */
+.accounts {
+  padding: 48px 28px;
+  text-align: center;
+  background: var(--bg-alt);
+}
+.accounts .ornament {
+  display: block;
+  width: 120px;
+  margin: 0 auto 16px;
+  color: var(--accent);
+}
+.accounts .ornament svg { width: 100%; height: 20px; }
+.accounts .section-title { margin-bottom: 14px; }
+.acc-note {
+  font-family: var(--font-serif);
+  font-size: calc(12.5px * var(--scale));
+  color: var(--text-tertiary);
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+.acc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+.acc-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.acc-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 18px;
+}
+.acc-head-label {
+  font-family: var(--font-serif);
+  font-size: calc(14px * var(--scale));
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.acc-chevron { color: var(--accent); display: inline-flex; transition: transform 0.3s ease; }
+.acc-group.open .acc-chevron { transform: rotate(180deg); }
+.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.acc-group.open .acc-body { max-height: 640px; }
+.acc-body-inner { overflow: hidden; }
+.acc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 18px;
+  border-top: 1px solid var(--border);
+}
+.acc-info { min-width: 0; }
+.acc-role {
+  font-family: var(--font-serif);
+  font-size: calc(12px * var(--scale));
+  color: var(--text-tertiary);
+  margin-bottom: 3px;
+}
+.acc-role strong { color: var(--text-primary); font-weight: 600; }
+.acc-num {
+  font-size: calc(13px * var(--scale));
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.acc-copy {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.acc-copy.copied { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════════════
+   민트 스케치 — cute scrapbook overrides (Template B)
+   ═══════════════════════════════════════════════════════════════ */
+body {
+  background-color: var(--bg-outer);
+  background-image: radial-gradient(rgba(127,191,166,0.28) 1.4px, transparent 1.6px);
+  background-size: 16px 16px;
+}
+
+/* handwritten hero */
+.hero-script {
+  font-family: var(--font-script);
+  font-style: normal;
+  color: var(--accent);
+  font-size: calc(22px * var(--scale));
+}
+.hero-names { font-family: var(--font-display); font-weight: 700; font-size: calc(34px * var(--scale)); }
+.hero-names .amp { font-family: var(--font-display); font-style: normal; color: var(--accent-warm); top: 0; }
+.hero-date {
+  font-family: var(--font-script);
+  text-transform: none;
+  letter-spacing: 0.5px;
+  font-size: calc(16px * var(--scale));
+  color: var(--text-secondary);
+}
+
+/* section titles handwritten */
+.section-title { font-family: var(--font-display); font-weight: 700; }
+
+/* ornaments → mint */
+.ornament { display: block; color: var(--accent); }
+.ornament svg path { stroke: var(--accent) !important; }
+
+/* date callout */
+.dc-script { font-family: var(--font-script); font-style: normal; color: var(--accent); font-size: calc(22px * var(--scale)); }
+.dc-month { font-family: var(--font-script); letter-spacing: 2px; color: var(--text-secondary); }
+.dc-day { font-family: var(--font-display); font-weight: 700; color: var(--accent); font-size: calc(88px * var(--scale)); }
+.dc-dow { font-family: var(--font-script); letter-spacing: 2px; color: var(--accent-warm); font-size: calc(18px * var(--scale)); }
+
+/* calendar — sketchy dashed card */
+.calendar { border: 2px dashed var(--divider); border-radius: 18px; background: var(--surface); }
+.cal-cell.is-target .cal-num { background: var(--accent); box-shadow: 0 4px 10px rgba(127,191,166,0.4); }
+
+/* countdown */
+.cd-num { font-family: var(--font-display); font-weight: 700; }
+.cd-row { border-top: 2px dashed var(--divider); border-bottom: 2px dashed var(--divider); }
+.cd-dday { font-family: var(--font-script); text-transform: none; letter-spacing: 1px; font-size: calc(16px * var(--scale)); }
+
+/* location */
+.venue-name { font-family: var(--font-display); font-weight: 700; }
+.map { border-radius: 18px; border: 2px dashed var(--divider); }
+.map-btn { border-radius: 16px; border: 2px solid var(--border); }
+.map-btn .logo { border-radius: 12px; }
+
+/* gallery — scrapbook photos (white frame + tilt) */
+.gallery-grid img {
+  border: 4px solid #fff;
+  border-radius: 6px;
+  box-shadow: 0 6px 16px rgba(77,83,70,0.12);
+}
+.gallery-grid img:nth-child(2) { transform: rotate(-2deg); }
+.gallery-grid img:nth-child(5) { transform: rotate(2deg); }
+.gallery-grid img:nth-child(8) { transform: rotate(-1.5deg); }
+
+/* accounts handwritten */
+.accounts .section-title, .acc-head-label { font-family: var(--font-display); font-weight: 700; }
+.acc-group { border: 2px dashed var(--divider); border-radius: 16px; }
+
+/* share CTA pill */
+.btn-share-cta { border-radius: 999px; }
+

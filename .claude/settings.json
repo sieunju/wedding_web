@@ -26,7 +26,8 @@
       "Bash(sed -i '' 's|href=\"styles-a.css\"|href=\"css/styles-a.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-a.html)",
       "Bash(sed -i '' 's|href=\"styles-b.css\"|href=\"css/styles-b.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-b.html)",
       "Bash(sed -i '' 's|href=\"styles-c.css\"|href=\"css/styles-c.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-c.html)",
-      "Bash(sed -i '' 's|href=\"styles-d.css\"|href=\"css/styles-d.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-d.html)"
+      "Bash(sed -i '' 's|href=\"styles-d.css\"|href=\"css/styles-d.css\"|' /Users/juhongmin/Developer/wedding_web/public/template-d.html)",
+      "Bash(chmod +x /Users/juhongmin/Developer/wedding_web/scripts/serve-local.sh /Users/juhongmin/Developer/wedding_web/scripts/convert-main.sh /Users/juhongmin/Developer/wedding_web/scripts/convert-images.sh)"
     ]
   }
 }

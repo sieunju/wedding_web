@@ -80,6 +80,12 @@ functions/.env.prod
 # Firebase 프로젝트 설정 (본인 프로젝트 ID 포함 — 커밋하지 않음)
 .firebaserc
 
+# IDE 설정
+.idea/
+
+# Claude Design 작업 원본 (로컬 작업 파일)
+example/
+
 # 개인 웨딩 사진 (오픈소스 배포 시 제외)
 public/images/*.webp
 public/images/*.jpg

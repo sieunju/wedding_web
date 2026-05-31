@@ -62,7 +62,7 @@ function buildInviteScript(data) {
     date: `__DATE__${data.date}__DATE__`,
     venue: data.venue ?? {},
     shareUrl: data.shareUrl ?? '',
-    accounts: data.accounts ?? [],
+    accounts: data.accounts ?? { groom: [], bride: [] },
     photos: data.photos ?? {},
   };
   const json = JSON.stringify(invite, null, 2)

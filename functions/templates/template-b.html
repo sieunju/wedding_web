@@ -3,41 +3,48 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>홍길동 ♡ 이영희 · 모바일 청첩장 (Botanical)</title>
+<title>홍길동 ♡ 이영희 · 모바일 청첩장</title>
+<meta name="description" content="저희 두 사람의 새로운 시작에 함께해 주세요." />
+<meta property="og:title" content="홍길동 ♡ 이영희 결혼합니다" />
+<meta property="og:type" content="website" />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
-<link rel="stylesheet" href="css/styles-b.css" />
+<link rel="stylesheet" href="/css/styles-b.css" />
 <script>
-  window.INVITE = {
-    groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
-    bride: { name: '이영희', father: '이대감', mother: '박소사', order: '장녀' },
-    date: new Date('2026-11-14T15:30:00+09:00'),
-    venue: {
-      name: '웨딩홀 이름', hall: '그랜드볼룸',
-      address: '서울특별시 강남구 테헤란로 123',
-      lat: 37.5065, lng: 127.0536,
-    },
-    shareUrl: 'https://your-domain.com',
-    accounts: [
-      { side: '신랑', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
-      { side: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
-      { side: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
+window.INVITE = {
+  groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
+  bride: { name: '이영희', father: '이대감', mother: '박소사', order: '장녀' },
+  date: new Date('2026-11-14T15:30:00+09:00'),
+  venue: {
+    name: '웨딩홀 이름', hall: '그랜드볼룸',
+    address: '서울특별시 강남구 테헤란로 123',
+    lat: 37.5065, lng: 127.0536,
+  },
+  accounts: {
+    groom: [
+      { role: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
+      { role: '아버지', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
+      { role: '어머니', name: '김춘섬', bank: '은행명', number: '000-000000-00-000' },
     ],
-    photos: {
-      main: 'images/gallery/05.webp',
-      gallery: [
-        'images/gallery/01.webp','images/gallery/02.webp','images/gallery/03.webp',
-        'images/gallery/04.webp','images/gallery/05.webp','images/gallery/06.webp',
-        'images/gallery/07.webp','images/gallery/08.webp','images/gallery/09.webp',
-      ],
-    },
-  };
+    bride: [
+      { role: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
+    ],
+  },
+  shareUrl: 'https://your-domain.com',
+  photos: {
+    main: 'images/main.webp',
+    gallery: [
+      'images/gallery/01.webp','images/gallery/02.webp','images/gallery/03.webp',
+      'images/gallery/04.webp','images/gallery/05.webp','images/gallery/06.webp',
+      'images/gallery/07.webp','images/gallery/08.webp','images/gallery/09.webp',
+    ],
+  },
+};
 </script>
 </head>
 <body>
 
 <div class="page">
 
-  <!-- TopBar -->
   <header class="topbar">
     <button class="btn-large-text" id="largeTextToggle" type="button" aria-pressed="false">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 7h8M7 7v12M14 11h6M17 11v8M3 4h8M14 8h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
@@ -50,16 +57,15 @@
 
   <!-- HERO with overlay names -->
   <section class="hero">
-    <img class="hero-img" src="images/gallery/05.webp" data-photo="main" alt="신랑 신부" />
+    <img class="hero-img" src="" data-photo="main" alt="메인 사진" />
     <div class="hero-overlay">
-      <!-- leaf SVG corners -->
       <svg class="leaf leaf-tl" viewBox="0 0 80 80" aria-hidden="true">
         <path d="M5 75 C 5 35, 35 5, 75 5 M 15 65 Q 30 50 50 45 Q 35 55 25 70 Z M 30 50 Q 45 35 65 30 Q 50 40 38 55 Z" fill="#E8DFD0" opacity="0.85"/>
       </svg>
       <svg class="leaf leaf-br" viewBox="0 0 80 80" aria-hidden="true">
         <path d="M5 75 C 5 35, 35 5, 75 5 M 15 65 Q 30 50 50 45 Q 35 55 25 70 Z M 30 50 Q 45 35 65 30 Q 50 40 38 55 Z" fill="#E8DFD0" opacity="0.85"/>
       </svg>
-      <div class="hero-script">청결혼을 알립니다</div>
+      <div class="hero-script">결혼을 알립니다</div>
       <h1 class="hero-names">
         <span data-groom-name>홍길동</span>
         <span class="amp">&amp;</span>
@@ -71,18 +77,18 @@
     </div>
   </section>
 
-  <!-- GALLERY (9장 모자이크 — 감성 우선) -->
+  <!-- GALLERY (9장 모자이크) -->
   <section class="gallery">
     <div class="gallery-grid">
-      <img src="images/gallery/01.webp" data-photo="gallery-1" alt="" loading="lazy" />
-      <img src="images/gallery/02.webp" data-photo="gallery-2" alt="" loading="lazy" />
-      <img src="images/gallery/03.webp" data-photo="gallery-3" alt="" loading="lazy" />
-      <img src="images/gallery/04.webp" data-photo="gallery-4" alt="" loading="lazy" />
-      <img src="images/gallery/05.webp" data-photo="gallery-5" alt="" loading="lazy" />
-      <img src="images/gallery/06.webp" data-photo="gallery-6" alt="" loading="lazy" />
-      <img src="images/gallery/07.webp" data-photo="gallery-7" alt="" loading="lazy" />
-      <img src="images/gallery/08.webp" data-photo="gallery-8" alt="" loading="lazy" />
-      <img src="images/gallery/09.webp" data-photo="gallery-9" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-0" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-1" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-2" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-3" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-4" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-5" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-6" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-7" alt="" loading="lazy" />
+      <img src="" data-photo="gallery-8" alt="" loading="lazy" />
     </div>
   </section>
 
@@ -97,7 +103,6 @@
 걸어갈 수 있는 큰 사랑으로 키우고자 합니다.<br /><br />
 저희 두 사람이 사랑의 이름으로 지켜나갈 수 있게<br />
 앞날을 축복해 주시면 감사하겠습니다.</p>
-
     <div class="parents">
       <div class="parent-col">
         <div class="parent-label">신랑측</div>
@@ -113,6 +118,16 @@
     </div>
   </section>
 
+  <!-- ACCOUNTS · 마음 전하실 곳 -->
+  <section class="accounts">
+    <div class="ornament" aria-hidden="true">
+      <svg viewBox="0 0 120 24"><path d="M0 12 H 48 M 72 12 H 120 M 56 6 Q 60 12 56 18 M 64 6 Q 60 12 64 18" stroke="#9CAB94" stroke-width="0.8" fill="none"/></svg>
+    </div>
+    <h2 class="section-title">마음 전하실 곳</h2>
+    <p class="acc-note">참석이 어려우신 분들을 위해 계좌번호를 안내드립니다.<br />너그러운 마음으로 양해 부탁드립니다.</p>
+    <div class="acc-list" data-accounts></div>
+  </section>
+
   <!-- DATE big callout -->
   <section class="date-callout">
     <div class="dc-script">날짜를 기억해 주세요</div>
@@ -120,8 +135,6 @@
     <div class="dc-day" data-day-num>14</div>
     <div class="dc-dow">토요일</div>
     <div class="dc-time" data-time-ko>오후 3시 30분</div>
-
-    <!-- mini calendar (week strip) -->
     <div class="calendar">
       <div class="cal-headers">
         <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
@@ -147,7 +160,6 @@
     <h3 class="section-title">오시는 길</h3>
     <div class="venue-name">웨딩홀 이름</div>
     <div class="venue-hall">그랜드볼룸</div>
-
     <div class="map">
       <svg viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <path d="M0 120 Q 80 80 160 90 T 320 60" stroke="#C7D2BA" stroke-width="6" fill="none"/>
@@ -161,31 +173,22 @@
         <div class="pin-dot"></div>
       </div>
     </div>
-
     <div class="address">
       <span id="addressText">서울특별시 강남구 테헤란로 123</span>
       <button class="address-copy" id="copyAddressBtn" type="button"><span class="copy-label">복사</span></button>
     </div>
-
     <div class="map-links-row">
       <button class="map-btn" type="button" data-map="naver"><div class="logo logo-naver">N</div><div class="map-btn-label">네이버지도</div></button>
       <button class="map-btn" type="button" data-map="kakao"><div class="logo logo-kakao">K</div><div class="map-btn-label">카카오맵</div></button>
       <button class="map-btn" type="button" data-map="tmap"><div class="logo logo-tmap">T</div><div class="map-btn-label">티맵</div></button>
     </div>
-
     <div class="transport">
-      <div class="transport-row"><div class="transport-label">지하철</div><div class="transport-text">지하철 X호선 XX역 X번 출구</div></div>
-      <div class="transport-row"><div class="transport-label">주차</div><div class="transport-text">건물 내 주차장 이용</div></div>
+      <div class="transport-row"><div class="transport-label">지하철</div><div class="transport-text">가까운 지하철역 N번 출구 도보 N분</div></div>
+      <div class="transport-row"><div class="transport-label">버스</div><div class="transport-text">버스 노선 → 정류장명 하차</div></div>
+      <div class="transport-row"><div class="transport-label">주차</div><div class="transport-text">건물 지하 주차 가능</div></div>
     </div>
   </section>
 
-  <!-- ACCOUNTS -->
-  <section class="acc-section">
-    <h3 class="section-title">마음 전하실 곳</h3>
-    <div id="accounts"></div>
-  </section>
-
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="ornament" aria-hidden="true">
       <svg viewBox="0 0 120 24"><path d="M0 12 H 48 M 72 12 H 120 M 56 6 Q 60 12 56 18 M 64 6 Q 60 12 64 18" stroke="#9CAB94" stroke-width="0.8" fill="none"/></svg>
@@ -195,7 +198,6 @@
   </footer>
 </div>
 
-<!-- SHARE SHEET -->
 <div class="modal share-modal" id="shareModal" hidden>
   <div class="modal-overlay" data-close></div>
   <div class="share-sheet">
@@ -216,7 +218,6 @@
   </div>
 </div>
 
-<!-- MAP MODAL -->
 <div class="modal map-modal" id="mapModal" hidden>
   <div class="modal-overlay" data-close></div>
   <div class="map-toast">
@@ -235,6 +236,6 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="main.js"></script>
+<script src="/main.js"></script>
 </body>
 </html>

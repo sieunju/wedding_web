@@ -1,25 +1,23 @@
-/* =================================================================
-   모바일 청첩장 — 바닐라 JS (템플릿 공용)
-   각 템플릿 HTML이 window.INVITE를 정의한 뒤 이 파일을 로드합니다.
-   ================================================================= */
-
 const INVITE = window.INVITE || {
   groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
   bride: { name: '이영희', father: '이대감', mother: '박소사', order: '장녀' },
   date: new Date('2026-11-14T15:30:00+09:00'),
   venue: {
-    name: '웨딩홀 이름',
-    hall: '그랜드볼룸',
+    name: '웨딩홀 이름', hall: '그랜드볼룸',
     address: '서울특별시 강남구 테헤란로 123',
-    lat: 37.5065,
-    lng: 127.0536,
+    lat: 37.5065, lng: 127.0536,
+  },
+  accounts: {
+    groom: [
+      { role: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
+      { role: '아버지', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
+      { role: '어머니', name: '김춘섬', bank: '은행명', number: '000-000000-00-000' },
+    ],
+    bride: [
+      { role: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
+    ],
   },
   shareUrl: 'https://your-domain.com',
-  accounts: [
-    { side: '신랑', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
-    { side: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
-    { side: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
-  ],
   photos: {
     main: 'images/main.webp',
     gallery: [
@@ -30,19 +28,15 @@ const INVITE = window.INVITE || {
   },
 };
 
-// ─── 상수 ────────────────────────────────────────────────────────
 const DAYS_KO = ['일', '월', '화', '수', '목', '금', '토'];
 const MONTHS_KO = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-// 영문 약자 (필요 시 사용)
 const MONTHS_EN_SHORT = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 
-// ─── 헬퍼 ────────────────────────────────────────────────────────
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 function pad2(n) { return String(n).padStart(2, '0'); }
 
-// safe text setter — element이 없으면 무시
 function setText(sel, text) {
   const el = $(sel);
   if (el) el.textContent = text;
@@ -56,7 +50,6 @@ function formatTimeKo(d) {
   return `${ampm} ${h12}시${m ? ' ' + m + '분' : ''}`;
 }
 
-// ─── 1) 캘린더 렌더 ────────────────────────────────────────────────
 function renderCalendar() {
   const d = INVITE.date;
   const year = d.getFullYear();
@@ -104,7 +97,6 @@ function renderCalendar() {
   });
 }
 
-// ─── 2) 카운트다운 ───────────────────────────────────────────────
 function renderCountdown() {
   const target = INVITE.date.getTime();
   const now = Date.now();
@@ -122,27 +114,23 @@ function renderCountdown() {
   setText('#cdDday', target < now ? '결혼' : `결혼식까지 ${days}일`);
 }
 
-// ─── 3) 큰글씨 모드 (localStorage 영속화) ───────────────────────────
 function setupLargeText() {
   const btn = $('#largeTextToggle');
   if (!btn) return;
   const KEY = 'wedding.largeText';
   let on = localStorage.getItem(KEY) === '1';
   apply();
-
-  btn.addEventListener('click', () => {
-    on = !on;
-    localStorage.setItem(KEY, on ? '1' : '0');
-    apply();
-  });
-
+  btn.addEventListener('click', () => { on = !on; localStorage.setItem(KEY, on ? '1' : '0'); apply(); });
   function apply() {
-    document.documentElement.style.setProperty('--scale', on ? '1.35' : '1');
+    document.documentElement.style.setProperty('--scale', on ? '1.28' : '1');
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
 }
 
-// ─── 4) 공유 시트 ────────────────────────────────────────────────
+function formatYmd(d) {
+  return `${d.getFullYear()}. ${pad2(d.getMonth() + 1)}. ${pad2(d.getDate())}.`;
+}
+
 function setupShareSheet() {
   const modal = $('#shareModal');
   if (!modal) return;
@@ -151,62 +139,33 @@ function setupShareSheet() {
 
   $('#shareTopBtn')?.addEventListener('click', open);
   $('#shareBottomBtn')?.addEventListener('click', open);
-  modal.addEventListener('click', e => {
-    if (e.target.dataset.close !== undefined) close();
-  });
+  modal.addEventListener('click', e => { if (e.target.dataset.close !== undefined) close(); });
 
-  // URL 텍스트
   setText('#shareUrl', INVITE.shareUrl);
 
-  // URL 복사
   $('#copyUrlBtn')?.addEventListener('click', async (e) => {
     try {
       await navigator.clipboard.writeText(INVITE.shareUrl);
       e.currentTarget.classList.add('copied');
       e.currentTarget.textContent = '복사됨';
-      setTimeout(() => {
-        e.currentTarget.classList.remove('copied');
-        e.currentTarget.textContent = 'URL 복사';
-      }, 1600);
-    } catch {
-      showToast('복사에 실패했습니다');
-    }
+      setTimeout(() => { e.currentTarget.classList.remove('copied'); e.currentTarget.textContent = 'URL 복사'; }, 1600);
+    } catch { showToast('복사에 실패했습니다'); }
   });
 
-  // 공유 옵션
   $$('.share-opt').forEach(btn => {
     btn.addEventListener('click', () => {
       const kind = btn.dataset.share;
       const title = `${INVITE.groom.name} ♡ ${INVITE.bride.name} 결혼합니다`;
       const text = `${formatYmd(INVITE.date)} ${formatTimeKo(INVITE.date)}\n${INVITE.venue.name}`;
       const url = INVITE.shareUrl;
-
-      if (kind === 'more' && navigator.share) {
-        navigator.share({ title, text, url }).catch(() => {});
-        return;
-      }
-      if (kind === 'sms') {
-        window.location.href = `sms:?body=${encodeURIComponent(`${title}\n${text}\n${url}`)}`;
-        return;
-      }
-      if (kind === 'mail') {
-        window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${text}\n\n${url}`)}`;
-        return;
-      }
-      if (kind === 'kakao') {
-        // TODO: 카카오 JavaScript SDK 연동 후 Kakao.Share.sendDefault 호출
-        showToast('카카오톡 공유는 카카오 SDK 연동 후 사용 가능합니다');
-        return;
-      }
+      if (kind === 'more' && navigator.share) { navigator.share({ title, text, url }).catch(() => {}); return; }
+      if (kind === 'sms') { window.location.href = `sms:?body=${encodeURIComponent(`${title}\n${text}\n${url}`)}`; return; }
+      if (kind === 'mail') { window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${text}\n\n${url}`)}`; return; }
+      if (kind === 'kakao') { showToast('카카오톡 공유는 카카오 SDK 연동 후 사용 가능합니다'); return; }
     });
   });
 }
 
-function formatYmd(d) {
-  return `${d.getFullYear()}. ${pad2(d.getMonth() + 1)}. ${pad2(d.getDate())}.`;
-}
-
-// ─── 5) 주소 복사 ────────────────────────────────────────────────
 function setupAddressCopy() {
   const btn = $('#copyAddressBtn');
   if (!btn) return;
@@ -216,53 +175,24 @@ function setupAddressCopy() {
       await navigator.clipboard.writeText(INVITE.venue.address);
       btn.classList.add('copied');
       label.textContent = '복사됨';
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        label.textContent = '복사';
-      }, 1600);
-    } catch {
-      showToast('복사에 실패했습니다');
-    }
+      setTimeout(() => { btn.classList.remove('copied'); label.textContent = '복사'; }, 1600);
+    } catch { showToast('복사에 실패했습니다'); }
   });
 }
 
-// ─── 6) 지도 딥링크 ──────────────────────────────────────────────
 function setupMapLinks() {
   const v = INVITE.venue;
   const enc = encodeURIComponent(v.name);
-
   const links = {
-    naver: {
-      app: '네이버지도',
-      deeplink: `nmap://place?lat=${v.lat}&lng=${v.lng}&name=${enc}&appname=wedding.invite`,
-      web: `https://map.naver.com/v5/search/${enc}`,
-    },
-    kakao: {
-      app: '카카오맵',
-      deeplink: `kakaomap://look?p=${v.lat},${v.lng}`,
-      web: `https://map.kakao.com/link/to/${enc},${v.lat},${v.lng}`,
-    },
-    tmap: {
-      app: '티맵',
-      // 주의: tmap은 x=lng, y=lat
-      deeplink: `tmap://route?goalname=${enc}&goalx=${v.lng}&goaly=${v.lat}`,
-      web: `https://tmap.life/`,
-    },
+    naver: { app: '네이버지도', deeplink: `nmap://place?lat=${v.lat}&lng=${v.lng}&name=${enc}&appname=wedding.invite`, web: `https://map.naver.com/v5/search/${enc}` },
+    kakao: { app: '카카오맵', deeplink: `kakaomap://look?p=${v.lat},${v.lng}`, web: `https://map.kakao.com/link/to/${enc},${v.lat},${v.lng}` },
+    tmap:  { app: '티맵', deeplink: `tmap://route?goalname=${enc}&goalx=${v.lng}&goaly=${v.lat}`, web: `https://tmap.life/` },
   };
-
   $$('.map-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const cfg = links[btn.dataset.map];
-      if (!cfg) return;
-      openMapModal(cfg);
-    });
+    btn.addEventListener('click', () => { const cfg = links[btn.dataset.map]; if (cfg) openMapModal(cfg); });
   });
-
   const modal = $('#mapModal');
-  if (!modal) return;
-  modal.addEventListener('click', e => {
-    if (e.target.dataset.close !== undefined) closeMapModal();
-  });
+  if (modal) modal.addEventListener('click', e => { if (e.target.dataset.close !== undefined) closeMapModal(); });
 }
 
 let _currentMap = null;
@@ -281,40 +211,19 @@ function closeMapModal() {
   _currentMap = null;
 }
 function openMapApp(cfg) {
-  const ua = navigator.userAgent;
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-
-  if (!isMobile) {
-    window.open(cfg.web, '_blank');
-    return;
-  }
-
-  // 모바일: 딥링크 시도 + 일정 시간 후 폴백
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!isMobile) { window.open(cfg.web, '_blank'); return; }
   const start = Date.now();
-  const timer = setTimeout(() => {
-    if (Date.now() - start < 2000 && !document.hidden) {
-      window.location.href = cfg.web;
-    }
-  }, 1500);
-
-  const onHide = () => {
-    if (document.hidden) clearTimeout(timer);
-    document.removeEventListener('visibilitychange', onHide);
-  };
+  const timer = setTimeout(() => { if (Date.now() - start < 2000 && !document.hidden) window.location.href = cfg.web; }, 1500);
+  const onHide = () => { if (document.hidden) clearTimeout(timer); document.removeEventListener('visibilitychange', onHide); };
   document.addEventListener('visibilitychange', onHide);
-
   window.location.href = cfg.deeplink;
 }
 
-// "열기" 버튼 핸들러
 function setupMapOpen() {
-  $('#mtOpenBtn')?.addEventListener('click', () => {
-    if (_currentMap) openMapApp(_currentMap);
-    closeMapModal();
-  });
+  $('#mtOpenBtn')?.addEventListener('click', () => { if (_currentMap) openMapApp(_currentMap); closeMapModal(); });
 }
 
-// ─── 7) 토스트 ───────────────────────────────────────────────────
 let toastTimer = null;
 function showToast(msg) {
   const el = $('#toast');
@@ -325,15 +234,161 @@ function showToast(msg) {
   toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
 }
 
-// ─── ESC 키로 모달 닫기 ──────────────────────────────────────────
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     const sm = $('#shareModal');
     const mm = $('#mapModal');
-    if (!sm.hidden) { sm.hidden = true; document.body.style.overflow = ''; }
-    if (!mm.hidden) closeMapModal();
+    if (sm && !sm.hidden) { sm.hidden = true; document.body.style.overflow = ''; }
+    if (mm && !mm.hidden) closeMapModal();
   }
 });
+
+function renderAccounts() {
+  const root = $('[data-accounts]');
+  if (!root || !INVITE.accounts) return;
+  const groups = [
+    { key: 'groom', label: '신랑측', list: INVITE.accounts.groom || [] },
+    { key: 'bride', label: '신부측', list: INVITE.accounts.bride || [] },
+  ];
+  root.innerHTML = groups.map(g => `
+    <div class="acc-group" data-acc-group>
+      <button class="acc-head" type="button" data-acc-toggle aria-expanded="false">
+        <span class="acc-head-label">${g.label}</span>
+        <span class="acc-chevron" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </button>
+      <div class="acc-body"><div class="acc-body-inner">
+        ${g.list.map(a => `
+          <div class="acc-row">
+            <div class="acc-info">
+              <div class="acc-role">${a.role} <strong>${a.name}</strong></div>
+              <div class="acc-num">${a.bank} ${a.number}</div>
+            </div>
+            <button class="acc-copy" type="button" data-acc-copy="${a.bank} ${a.number}">복사</button>
+          </div>`).join('')}
+      </div></div>
+    </div>`).join('');
+
+  $$('[data-acc-toggle]', root).forEach(btn => {
+    btn.addEventListener('click', () => {
+      const group = btn.closest('[data-acc-group]');
+      const open = group.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  $$('[data-acc-copy]', root).forEach(btn => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.accCopy);
+        btn.classList.add('copied');
+        const orig = btn.textContent;
+        btn.textContent = '복사됨';
+        showToast('계좌번호가 복사되었습니다');
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = orig; }, 1600);
+      } catch { showToast('복사에 실패했습니다'); }
+    });
+  });
+}
+
+const EASE = 'cubic-bezier(0.22,0.61,0.36,1)';
+const PREFERS_REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function injectFxStyle() {
+  if (document.getElementById('__fx-style')) return;
+  const st = document.createElement('style');
+  st.id = '__fx-style';
+  st.textContent = `
+    .fx { opacity: 0; transform: translateY(28px); transition: opacity .85s ${EASE}, transform .85s ${EASE}; }
+    .fx-hero { transform: translateY(22px); transition: opacity 1s ${EASE}, transform 1s ${EASE}; }
+    .fx.fx-in { opacity: 1 !important; transform: none !important; }
+  `;
+  document.head.appendChild(st);
+}
+
+function revealWhenVisible(els, { stagger = 0.08, failsafe = 2400 } = {}) {
+  const show = el => el.classList.add('fx-in');
+  if (!('IntersectionObserver' in window)) { els.forEach(show); return; }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const i = parseInt(e.target.dataset.fxIndex || '0', 10);
+      e.target.style.transitionDelay = Math.min(i, 5) * stagger + 's';
+      show(e.target);
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => io.observe(el));
+  setTimeout(() => els.forEach(show), failsafe);
+}
+
+function setupHeroIntro() {
+  const hero = $('.cover') || $('.hero');
+  if (!hero) return;
+  let items = [...hero.children].filter(el => !el.matches('script, style'));
+  const overlay = hero.querySelector('.hero-overlay');
+  if (overlay) {
+    items = items.filter(el => el !== overlay).concat([...overlay.children].filter(el => !el.matches('script, style, svg')));
+  }
+  if (!items.length || PREFERS_REDUCE) return;
+  injectFxStyle();
+  items.forEach((el, i) => { el.classList.add('fx', 'fx-hero'); el.dataset.fxIndex = i; el.style.transitionDelay = (0.1 + i * 0.13) + 's'; });
+  setTimeout(() => items.forEach(el => el.classList.add('fx-in')), 60);
+  setTimeout(() => items.forEach(el => el.classList.add('fx-in')), 1200);
+}
+
+function setupReveal() {
+  if (PREFERS_REDUCE) return;
+  const sections = $$('section').filter(s => !s.matches('.cover, .hero'));
+  const blocks = [];
+  sections.forEach(sec => {
+    [...sec.children].filter(el => !el.matches('script, style')).forEach((el, i) => { el.dataset.fxIndex = i; blocks.push(el); });
+  });
+  if (!blocks.length) return;
+  injectFxStyle();
+  blocks.forEach(el => el.classList.add('fx'));
+  revealWhenVisible(blocks);
+}
+
+function setupParallax() {
+  if (PREFERS_REDUCE) return;
+  const sel = ['.hero-img', '.hero-photo img', '.cover .hero-photo img', '.gallery img', '.gallery-grid img', '.gallery-grid-9 img', '.g-grid img', '.g-grid-9 img', '.gallery-strip img', '[data-parallax]'].join(',');
+  const imgs = [...new Set($$(sel))];
+  if (!imgs.length) return;
+  imgs.forEach(img => {
+    const isHero = img.classList.contains('hero-img') || img.closest('.hero-photo') || img.closest('.hero') || img.closest('.cover');
+    img.dataset.pAmt = isHero ? '22' : '11';
+    img.style.willChange = 'object-position';
+  });
+  let ticking = false;
+  function update() {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    imgs.forEach(img => {
+      const r = img.getBoundingClientRect();
+      if (r.bottom < -140 || r.top > vh + 140) return;
+      const center = r.top + r.height / 2;
+      const prog = (vh / 2 - center) / (vh / 2 + r.height / 2);
+      const y = 50 - prog * (parseFloat(img.dataset.pAmt) || 11);
+      img.style.objectPosition = `50% ${y.toFixed(2)}%`;
+    });
+    ticking = false;
+  }
+  function onScroll() { if (!ticking) { requestAnimationFrame(update); ticking = true; } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  update();
+}
+
+function renderPhotos() {
+  if (!INVITE.photos) return;
+  const mainImg = $('[data-photo="main"]');
+  if (mainImg && INVITE.photos.main) mainImg.src = INVITE.photos.main;
+  const gallery = INVITE.photos.gallery || [];
+  gallery.forEach((url, i) => {
+    const img = $(`[data-photo="gallery-${i}"]`);
+    if (img) img.src = url;
+  });
+}
 
 function preventPinchZoom() {
   document.addEventListener('touchmove', e => {
@@ -354,54 +409,11 @@ function showTemplateIndicator() {
   document.body.appendChild(pill);
 }
 
-function renderAccounts() {
-  const el = $('#accounts');
-  if (!el || !INVITE.accounts?.length) return;
-  const groups = {};
-  INVITE.accounts.forEach(a => {
-    if (!groups[a.side]) groups[a.side] = [];
-    groups[a.side].push(a);
-  });
-  el.innerHTML = Object.entries(groups).map(([side, list]) => `
-    <div class="acc-group">
-      <div class="acc-side-label">${side}측</div>
-      ${list.map(a => `
-        <div class="acc-row">
-          <div class="acc-info">
-            <span class="acc-name">${a.name}</span>
-            <span class="acc-bank">${a.bank}</span>
-            <span class="acc-num">${a.number}</span>
-          </div>
-          <button class="acc-copy" type="button" data-number="${a.number}">복사</button>
-        </div>`).join('')}
-    </div>`).join('');
-  el.querySelectorAll('.acc-copy').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(btn.dataset.number);
-        btn.textContent = '복사됨';
-        setTimeout(() => { btn.textContent = '복사'; }, 1600);
-      } catch { showToast('복사에 실패했습니다'); }
-    });
-  });
-}
-
-function renderPhotos() {
-  const p = INVITE.photos;
-  if (!p) return;
-  if (p.main) $$('[data-photo="main"]').forEach(el => { el.src = p.main; });
-  (p.gallery || []).forEach((src, i) => {
-    $$(`[data-photo="gallery-${i + 1}"]`).forEach(el => { el.src = src; });
-  });
-}
-
-// ─── init ───────────────────────────────────────────────────────
 function init() {
   preventPinchZoom();
   showTemplateIndicator();
-  renderCalendar();
-  renderAccounts();
   renderPhotos();
+  renderCalendar();
   renderCountdown();
   setInterval(renderCountdown, 1000);
   setupLargeText();
@@ -409,6 +421,16 @@ function init() {
   setupAddressCopy();
   setupMapLinks();
   setupMapOpen();
+  renderAccounts();
+  function armScrollFX() { setupHeroIntro(); setupReveal(); setupParallax(); }
+  if (PREFERS_REDUCE) {
+    // no animation
+  } else if (document.visibilityState === 'visible') {
+    armScrollFX();
+  } else {
+    const onVis = () => { if (document.visibilityState === 'visible') { document.removeEventListener('visibilitychange', onVis); armScrollFX(); } };
+    document.addEventListener('visibilitychange', onVis);
+  }
 }
 
 if (document.readyState === 'loading') {

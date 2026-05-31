@@ -711,14 +711,86 @@ img { display: block; max-width: 100%; }
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes popIn { 0% { opacity: 0; transform: scale(0.94); } 100% { opacity: 1; transform: scale(1); } }
 
-/* ─── 계좌 섹션 ─── */
-.acc-section { padding: 48px 24px; background: var(--bg-alt); text-align: center; }
-.acc-group { margin: 24px 0; text-align: left; }
-.acc-side-label { font-size: 11px; letter-spacing: 2px; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--divider); }
-.acc-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-.acc-info { display: flex; flex-direction: column; gap: 2px; }
-.acc-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.acc-bank { font-size: 12px; color: var(--text-secondary); }
-.acc-num  { font-size: 13px; color: var(--text-primary); letter-spacing: 0.5px; }
-.acc-copy { flex-shrink: 0; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface, #fff); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: background 0.15s, color 0.15s; }
-.acc-copy:active, .acc-copy.copied { background: var(--accent); color: #fff; border-color: var(--accent); }
+/* ── ACCOUNTS · 마음 전하실 곳 ── */
+.accounts {
+  padding: 56px 28px 48px;
+  text-align: left;
+  border-top: 1px solid var(--border);
+}
+.accounts .d-eyebrow,
+.accounts .d-title { text-align: left; }
+.acc-note {
+  font-family: var(--font-serif);
+  font-size: calc(13px * var(--scale));
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 26px;
+}
+.acc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.acc-group {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.acc-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+}
+.acc-head-label {
+  font-family: var(--font-display);
+  font-size: calc(16px * var(--scale));
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+.acc-chevron { color: var(--accent); display: inline-flex; transition: transform 0.3s ease; }
+.acc-group.open .acc-chevron { transform: rotate(180deg); }
+.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.acc-group.open .acc-body { max-height: 640px; }
+.acc-body-inner { overflow: hidden; }
+.acc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+}
+.acc-info { min-width: 0; }
+.acc-role {
+  font-family: var(--font-mono);
+  font-size: calc(10px * var(--scale));
+  letter-spacing: 1.5px;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.acc-role strong { color: var(--text-primary); font-weight: 600; }
+.acc-num {
+  font-family: var(--font-serif);
+  font-size: calc(14px * var(--scale));
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.acc-copy {
+  flex-shrink: 0;
+  padding: 7px 13px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background 0.18s, color 0.18s;
+}
+.acc-copy.copied { background: var(--accent); color: var(--bg-deep); }
+

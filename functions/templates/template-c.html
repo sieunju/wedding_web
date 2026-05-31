@@ -3,34 +3,42 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-<title>홍길동 ♡ 이영희 · 모바일 청첩장 (Editorial)</title>
+<title>홍길동 ♡ 이영희 · 모바일 청첩장</title>
+<meta name="description" content="저희 두 사람의 새로운 시작에 함께해 주세요." />
+<meta property="og:title" content="홍길동 ♡ 이영희 결혼합니다" />
+<meta property="og:type" content="website" />
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
-<link rel="stylesheet" href="css/styles-c.css" />
+<link rel="stylesheet" href="/css/styles-c.css" />
 <script>
-  window.INVITE = {
-    groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
-    bride: { name: '이영희', father: '이대감', mother: '박소사', order: '장녀' },
-    date: new Date('2026-11-14T15:30:00+09:00'),
-    venue: {
-      name: '웨딩홀 이름', hall: '그랜드볼룸',
-      address: '서울특별시 강남구 테헤란로 123',
-      lat: 37.5065, lng: 127.0536,
-    },
-    shareUrl: 'https://your-domain.com',
-    accounts: [
-      { side: '신랑', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
-      { side: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
-      { side: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
+window.INVITE = {
+  groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
+  bride: { name: '이영희', father: '이대감', mother: '박소사', order: '장녀' },
+  date: new Date('2026-11-14T15:30:00+09:00'),
+  venue: {
+    name: '웨딩홀 이름', hall: '그랜드볼룸',
+    address: '서울특별시 강남구 테헤란로 123',
+    lat: 37.5065, lng: 127.0536,
+  },
+  accounts: {
+    groom: [
+      { role: '신랑', name: '홍길동', bank: '은행명', number: '000-000000-00-000' },
+      { role: '아버지', name: '홍판서', bank: '은행명', number: '000-000000-00-000' },
+      { role: '어머니', name: '김춘섬', bank: '은행명', number: '000-000000-00-000' },
     ],
-    photos: {
-      main: 'images/main.webp',
-      gallery: [
-        'images/gallery/01.webp','images/gallery/02.webp','images/gallery/03.webp',
-        'images/gallery/04.webp','images/gallery/05.webp','images/gallery/06.webp',
-        'images/gallery/07.webp','images/gallery/08.webp','images/gallery/09.webp',
-      ],
-    },
-  };
+    bride: [
+      { role: '신부', name: '이영희', bank: '은행명', number: '000-000000-00-000' },
+    ],
+  },
+  shareUrl: 'https://your-domain.com',
+  photos: {
+    main: 'images/main.webp',
+    gallery: [
+      'images/gallery/01.webp','images/gallery/02.webp','images/gallery/03.webp',
+      'images/gallery/04.webp','images/gallery/05.webp','images/gallery/06.webp',
+      'images/gallery/07.webp','images/gallery/08.webp','images/gallery/09.webp',
+    ],
+  },
+};
 </script>
 </head>
 <body>
@@ -53,17 +61,14 @@
       <div class="issue">An invitation</div>
       <div class="date-tag" data-date-ymd>2026. 11. 14</div>
     </div>
-
     <h1 class="hero-title">
       <span class="ht-line">저희</span>
       <span class="ht-line ht-italic">결혼</span>
       <span class="ht-line">합니다.</span>
     </h1>
-
     <div class="hero-photo">
-      <img src="images/main.webp" data-photo="main" alt="신랑 신부" />
+      <img src="" data-photo="main" alt="메인 사진" />
     </div>
-
     <div class="hero-names">
       <div class="hn-row">
         <span class="hn-label">신랑</span>
@@ -76,7 +81,7 @@
     </div>
   </section>
 
-  <!-- STAT BLOCK — replaces calendar -->
+  <!-- STAT BLOCK -->
   <section class="stats">
     <div class="stat-row">
       <div class="stat-key">일시</div>
@@ -96,7 +101,7 @@
     </div>
   </section>
 
-  <!-- GREETING — editorial body -->
+  <!-- GREETING -->
   <section class="greeting">
     <div class="g-eyebrow">— 01</div>
     <h2 class="g-title">초대의 글</h2>
@@ -104,7 +109,6 @@
 한 곳을 바라보며 걸어갈 수 있는 큰 사랑으로<br />
 키우고자 합니다. 저희 두 사람이 사랑의 이름으로<br />
 지켜나갈 수 있게 앞날을 축복해 주시면 감사하겠습니다.</p>
-
     <div class="parents">
       <div class="p-col">
         <div class="p-label">신랑</div>
@@ -119,25 +123,25 @@
     </div>
   </section>
 
-  <!-- ASYMMETRIC GALLERY (9장 매거진 컬라주) -->
+  <!-- ASYMMETRIC GALLERY (9장 매거진 콜라주) -->
   <section class="gallery">
     <div class="g-eyebrow">— 02</div>
     <h2 class="g-title">순간들</h2>
     <div class="g-grid">
-      <img class="g-big" src="images/gallery/01.webp" data-photo="gallery-1" alt="" loading="lazy" />
-      <img class="g-sm" src="images/gallery/02.webp" data-photo="gallery-2" alt="" loading="lazy" />
-      <img class="g-sm" src="images/gallery/03.webp" data-photo="gallery-3" alt="" loading="lazy" />
-      <img class="g-wide" src="images/gallery/04.webp" data-photo="gallery-4" alt="" loading="lazy" />
-      <img class="g-sm" src="images/gallery/05.webp" data-photo="gallery-5" alt="" loading="lazy" />
-      <img class="g-tall" src="images/gallery/06.webp" data-photo="gallery-6" alt="" loading="lazy" />
-      <img class="g-sm" src="images/gallery/07.webp" data-photo="gallery-7" alt="" loading="lazy" />
-      <img class="g-sm" src="images/gallery/08.webp" data-photo="gallery-8" alt="" loading="lazy" />
-      <img class="g-wide" src="images/gallery/09.webp" data-photo="gallery-9" alt="" loading="lazy" />
+      <img class="g-big"  src="" data-photo="gallery-0" alt="" loading="lazy" />
+      <img class="g-sm"   src="" data-photo="gallery-1" alt="" loading="lazy" />
+      <img class="g-sm"   src="" data-photo="gallery-2" alt="" loading="lazy" />
+      <img class="g-wide" src="" data-photo="gallery-3" alt="" loading="lazy" />
+      <img class="g-sm"   src="" data-photo="gallery-4" alt="" loading="lazy" />
+      <img class="g-tall" src="" data-photo="gallery-5" alt="" loading="lazy" />
+      <img class="g-sm"   src="" data-photo="gallery-6" alt="" loading="lazy" />
+      <img class="g-sm"   src="" data-photo="gallery-7" alt="" loading="lazy" />
+      <img class="g-wide" src="" data-photo="gallery-8" alt="" loading="lazy" />
     </div>
     <div class="g-foot-mark">— 9장의 순간 —</div>
   </section>
 
-  <!-- mini hidden calendar (kept for JS, hidden via CSS) -->
+  <!-- hidden calendar (kept for JS) -->
   <div class="calendar-hidden">
     <div id="calGrid"></div>
   </div>
@@ -146,35 +150,29 @@
   <section class="countdown">
     <div class="g-eyebrow">— 03</div>
     <h2 class="g-title">결혼식까지</h2>
-
     <div class="cd-grid">
-      <div class="cd-cell">
-        <div class="cd-num" id="cdDays">00</div>
-        <div class="cd-label">일</div>
-      </div>
-      <div class="cd-cell">
-        <div class="cd-num" id="cdHours">00</div>
-        <div class="cd-label">시간</div>
-      </div>
-      <div class="cd-cell">
-        <div class="cd-num" id="cdMin">00</div>
-        <div class="cd-label">분</div>
-      </div>
-      <div class="cd-cell">
-        <div class="cd-num" id="cdSec">00</div>
-        <div class="cd-label">초</div>
-      </div>
+      <div class="cd-cell"><div class="cd-num" id="cdDays">00</div><div class="cd-label">일</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cdHours">00</div><div class="cd-label">시간</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cdMin">00</div><div class="cd-label">분</div></div>
+      <div class="cd-cell"><div class="cd-num" id="cdSec">00</div><div class="cd-label">초</div></div>
     </div>
     <div class="cd-foot" id="cdDday">D-—</div>
   </section>
 
+  <!-- ACCOUNTS · 마음 전하실 곳 -->
+  <section class="accounts">
+    <div class="g-eyebrow">— 04</div>
+    <h2 class="g-title">마음 전하실 곳</h2>
+    <p class="acc-note">참석이 어려우신 분들을 위해 계좌번호를 안내드립니다. 너그러운 마음으로 양해 부탁드립니다.</p>
+    <div class="acc-list" data-accounts></div>
+  </section>
+
   <!-- LOCATION -->
   <section class="location">
-    <div class="g-eyebrow">— 04</div>
+    <div class="g-eyebrow">— 05</div>
     <h2 class="g-title">오시는 길</h2>
     <div class="venue-name">웨딩홀 이름</div>
     <div class="venue-hall">그랜드볼룸</div>
-
     <div class="map">
       <svg viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <rect width="320" height="160" fill="#F4F1EC"/>
@@ -189,31 +187,22 @@
         <div class="pin-dot"></div>
       </div>
     </div>
-
     <div class="address">
       <span id="addressText">서울특별시 강남구 테헤란로 123</span>
       <button class="address-copy" id="copyAddressBtn" type="button"><span class="copy-label">복사</span></button>
     </div>
-
     <div class="map-links-row">
       <button class="map-btn" type="button" data-map="naver"><div class="logo logo-naver">N</div><div class="map-btn-label">네이버지도</div></button>
       <button class="map-btn" type="button" data-map="kakao"><div class="logo logo-kakao">K</div><div class="map-btn-label">카카오맵</div></button>
       <button class="map-btn" type="button" data-map="tmap"><div class="logo logo-tmap">T</div><div class="map-btn-label">티맵</div></button>
     </div>
-
     <div class="transport">
-      <div class="transport-row"><div class="transport-label">지하철</div><div class="transport-text">지하철 X호선 XX역 X번 출구</div></div>
-      <div class="transport-row"><div class="transport-label">주차</div><div class="transport-text">건물 내 주차장 이용</div></div>
+      <div class="transport-row"><div class="transport-label">지하철</div><div class="transport-text">가까운 지하철역 N번 출구 도보 N분</div></div>
+      <div class="transport-row"><div class="transport-label">버스</div><div class="transport-text">버스 노선 → 정류장명 하차</div></div>
+      <div class="transport-row"><div class="transport-label">주차</div><div class="transport-text">건물 지하 주차 가능 / 발렛 가능</div></div>
     </div>
   </section>
 
-  <!-- ACCOUNTS -->
-  <section class="acc-section">
-    <h3 class="g-title">마음 전하실 곳</h3>
-    <div id="accounts"></div>
-  </section>
-
-  <!-- FOOTER -->
   <footer class="footer">
     <h2 class="foot-title">
       <span data-groom-name>홍길동</span>
@@ -228,7 +217,6 @@
   </footer>
 </div>
 
-<!-- modals -->
 <div class="modal share-modal" id="shareModal" hidden>
   <div class="modal-overlay" data-close></div>
   <div class="share-sheet">
@@ -265,6 +253,6 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="main.js"></script>
+<script src="/main.js"></script>
 </body>
 </html>

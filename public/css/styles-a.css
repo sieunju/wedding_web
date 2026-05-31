@@ -2,24 +2,26 @@
    디자인 토큰
    ───────────────────────────────────────────────────────────── */
 :root {
-  /* color */
-  --bg-base: #FAF7F2;
-  --bg-alt: #FBF8F2;
-  --bg-outer: #E8E2D6;
+  /* color — 포근 파스텔 (cozy pastel) */
+  --bg-base: #FFF7F4;
+  --bg-alt: #FDEDE8;
+  --bg-outer: #F3DAD6;
   --surface: #FFFFFF;
-  --border: #ECE6DA;
-  --divider: #D9D2C5;
-  --text-primary: #2C2A26;
-  --text-secondary: #5C564D;
-  --text-tertiary: #8A8378;
-  --accent: #A07856;
-  --sun: #C97B6A;
-  --sat: #7A8FA6;
+  --border: #F7DDD7;
+  --divider: #F2CBC4;
+  --text-primary: #5E4A47;
+  --text-secondary: #8C736E;
+  --text-tertiary: #BBA09B;
+  --accent: #EC8C9C;
+  --accent-2: #8FCBC0;
+  --sun: #EC8C9C;
+  --sat: #8FB6D2;
 
   /* type */
   --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   --font-serif: 'Pretendard', sans-serif;
   --font-display: 'Pretendard', sans-serif;
+  --font-script: 'Pretendard', sans-serif;
   --font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* scale (큰글씨 모드 토글) */
@@ -860,14 +862,204 @@ svg { display: block; }
   100% { opacity: 1; transform: scale(1); }
 }
 
-/* ─── 계좌 섹션 ─── */
-.acc-section { padding: 48px 24px; background: var(--bg-alt); text-align: center; }
-.acc-group { margin: 24px 0; text-align: left; }
-.acc-side-label { font-size: 11px; letter-spacing: 2px; color: var(--text-tertiary); text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--divider); }
-.acc-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-.acc-info { display: flex; flex-direction: column; gap: 2px; }
-.acc-name { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-.acc-bank { font-size: 12px; color: var(--text-secondary); }
-.acc-num  { font-size: 13px; color: var(--text-primary); letter-spacing: 0.5px; }
-.acc-copy { flex-shrink: 0; padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface, #fff); color: var(--text-secondary); font-size: 12px; cursor: pointer; transition: background 0.15s, color 0.15s; }
-.acc-copy:active, .acc-copy.copied { background: var(--accent); color: #fff; border-color: var(--accent); }
+/* ─────────────────────────────────────────────────────────────
+   accounts · 마음 전하실 곳 (계좌번호 아코디언)
+   ───────────────────────────────────────────────────────────── */
+.accounts {
+  padding: 56px 28px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: var(--bg-base);
+}
+.acc-title {
+  font-family: var(--font-serif);
+  font-size: calc(18px * var(--scale));
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  letter-spacing: -0.2px;
+}
+.acc-note {
+  font-size: calc(12.5px * var(--scale));
+  color: var(--text-tertiary);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+.acc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+.acc-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.acc-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+}
+.acc-head-label {
+  font-family: var(--font-serif);
+  font-size: calc(14px * var(--scale));
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.acc-chevron {
+  color: var(--accent);
+  display: inline-flex;
+  transition: transform 0.3s ease;
+}
+.acc-group.open .acc-chevron { transform: rotate(180deg); }
+.acc-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+.acc-group.open .acc-body { max-height: 640px; }
+.acc-body-inner { overflow: hidden; }
+.acc-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+}
+.acc-info { min-width: 0; }
+.acc-role {
+  font-size: calc(12px * var(--scale));
+  color: var(--text-tertiary);
+  margin-bottom: 3px;
+}
+.acc-role strong { color: var(--text-primary); font-weight: 600; }
+.acc-num {
+  font-size: calc(13px * var(--scale));
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+.acc-copy {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+}
+.acc-copy.copied { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════════════════
+   포근 파스텔 — cute & dainty overrides (Template A)
+   ═══════════════════════════════════════════════════════════════ */
+body {
+  background-color: var(--bg-outer);
+  background-image: radial-gradient(var(--divider) 1.4px, transparent 1.6px);
+  background-size: 18px 18px;
+}
+
+/* eyebrows — soft label + little heart */
+.eyebrow {
+  font-family: var(--font-serif);
+  text-transform: none;
+  letter-spacing: 1px;
+  color: var(--accent);
+  font-size: calc(13px * var(--scale));
+}
+.eyebrow::before { content: '♡ '; }
+.cover .eyebrow { color: var(--accent); letter-spacing: 1px; }
+.gallery-eyebrow, .footer-en {
+  font-family: var(--font-display);
+  text-transform: none;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  font-weight: 400;
+}
+
+/* couple names — bubbly + heart connector */
+.couple-names { font-family: var(--font-display); letter-spacing: 0; }
+.couple-names .name { font-family: var(--font-display); }
+.couple-names .amp { font-size: 0; margin: 4px 0; }
+.couple-names .amp::after {
+  content: '♥';
+  font-size: calc(22px * var(--scale));
+  color: var(--accent);
+}
+
+/* big headings → bubbly Jua */
+.greeting-title, .venue-name, .acc-title, .date-en {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+.date-en { letter-spacing: 2px; color: var(--accent); }
+
+/* hero photo — soft frame */
+.hero-photo {
+  border-radius: 28px;
+  border: 5px solid #fff;
+  box-shadow: 0 12px 32px rgba(236,140,156,0.20);
+}
+.hero-photo img { filter: saturate(1.04) contrast(0.97); }
+
+/* heart divider */
+.hairline { width: auto; height: auto; background: transparent; line-height: 1; }
+.hairline::after {
+  content: '• ♥ •';
+  color: var(--accent);
+  letter-spacing: 6px;
+  font-size: calc(13px * var(--scale));
+}
+
+/* section dividers — dashed pastel */
+.greeting, .date-card, .countdown, .location, .accounts, .footer,
+.gallery-section, .transport {
+  border-top: 2px dashed var(--divider);
+}
+
+/* calendar — rounded card */
+.calendar {
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 22px;
+  padding: 18px 16px;
+}
+.cal-cell.is-target .cal-num {
+  box-shadow: 0 4px 12px rgba(236,140,156,0.45);
+}
+
+/* countdown — bubbly numerals */
+.cd-num { font-family: var(--font-display); font-weight: 400; }
+.cd-cell.big .cd-num { color: var(--accent); }
+.cd-dday {
+  font-family: var(--font-display);
+  text-transform: none;
+  letter-spacing: 1px;
+  font-size: calc(15px * var(--scale));
+}
+
+/* map + pills — round + pastel */
+.map { border-radius: 22px; border: 2px solid var(--border); }
+.map-btn { border-radius: 18px; border: 2px solid var(--border); background: #fff; }
+.map-btn .logo { border-radius: 14px; }
+.address-copy { border: 1.5px solid var(--border); }
+.gallery-grid-9 img { border-radius: 14px; }
+
+/* accounts — round cards */
+.acc-group { border: 2px solid var(--border); border-radius: 20px; }
+.acc-copy { border: 1.5px solid var(--border); }
+
+/* share CTA — candy pill */
+.btn-share-cta {
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 10px 24px rgba(236,140,156,0.32);
+}
+.btn-large-text[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+

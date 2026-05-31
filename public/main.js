@@ -358,7 +358,7 @@ function setupParallax() {
   imgs.forEach(img => {
     const isHero = img.classList.contains('hero-img') || img.closest('.hero-photo') || img.closest('.hero') || img.closest('.cover');
     img.dataset.pAmt = isHero ? '22' : '11';
-    img.style.willChange = 'object-position';
+    img.style.willChange = 'auto';
   });
   let ticking = false;
   function update() {

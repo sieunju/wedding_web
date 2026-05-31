@@ -68,13 +68,22 @@ Firebase Console → Firestore → `invitations/main` 문서를 생성하세요.
 | `venue.lat` | number | `37.5065` |
 | `venue.lng` | number | `127.0536` |
 | `shareUrl` | string | `https://your-domain.com` |
-| `accounts` | array | 계좌 목록 (아래 참고) |
+| `accounts.groom` | array | 신랑측 계좌 목록 (아래 참고) |
+| `accounts.bride` | array | 신부측 계좌 목록 (아래 참고) |
 | `photos.main` | string | Storage URL 또는 상대경로 |
-| `photos.gallery` | array | 갤러리 이미지 URL 목록 |
+| `photos.gallery` | array | 갤러리 이미지 URL 목록 (최대 9장) |
 
-**accounts 배열 항목 구조:**
+**accounts 구조:**
 ```json
-{ "side": "신랑", "name": "홍판서", "bank": "국민은행", "number": "000-000000-00-000" }
+{
+  "groom": [
+    { "role": "신랑", "name": "홍길동", "bank": "국민은행", "number": "000-000000-00-000" },
+    { "role": "아버지", "name": "홍판서", "bank": "국민은행", "number": "000-000000-00-000" }
+  ],
+  "bride": [
+    { "role": "신부", "name": "이영희", "bank": "신한은행", "number": "000-000000-00-000" }
+  ]
+}
 ```
 
 ### 5. 웨딩 사진 추가

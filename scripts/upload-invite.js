@@ -33,6 +33,11 @@ const raw = JSON.parse(fs.readFileSync(absolutePath, 'utf-8'));
 
 const admin = require('../functions/node_modules/firebase-admin');
 
+const keyPath = path.resolve(__dirname, '../serviceAccountKey.json');
+if (!process.env.GOOGLE_APPLICATION_CREDENTIALS && fs.existsSync(keyPath)) {
+  process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
+}
+
 admin.initializeApp();
 const db = admin.firestore();
 

@@ -23,6 +23,6 @@ for i in "${!FILES[@]}"; do
   NUM=$(printf "%02d" $((i + 1)))
   OUT="$OUTPUT_DIR/$NUM.webp"
   echo "  $((i+1))/${#FILES[@]}: $(basename "${FILES[$i]}") → $NUM.webp"
-  convert "${FILES[$i]}" -auto-orient -resize 1200x -quality 85 -define webp:lossless=false "$OUT"
+  convert "${FILES[$i]}" -auto-orient -resize 1200x -quality 100 -define webp:lossless=false "$OUT"
 done
 echo "✅ 완료: $OUTPUT_DIR/"

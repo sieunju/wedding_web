@@ -20,5 +20,5 @@ if [ -z "$INPUT" ]; then
 fi
 
 echo "📸 변환: $INPUT → $OUTPUT"
-convert "$INPUT" -auto-orient -resize 1200x -quality 85 -define webp:lossless=false "$OUTPUT"
+convert "$INPUT" -auto-orient -resize 1200x -quality 100 -define webp:lossless=false "$OUTPUT"
 echo "✅ 완료: $OUTPUT ($(du -h "$OUTPUT" | cut -f1))"

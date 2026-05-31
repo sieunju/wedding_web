@@ -62,6 +62,11 @@ node_modules/
 # Yarn Integrity file
 .yarn-integrity
 
+# Firebase 서비스 계정 키 (절대 커밋 금지)
+serviceAccountKey.json
+*serviceaccount*.json
+*service-account*.json
+
 # dotenv environment variables file
 .env
 

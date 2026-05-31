@@ -379,6 +379,19 @@ function setupParallax() {
   update();
 }
 
+function renderTransport() {
+  const root = $('[data-transport]');
+  if (!root || !INVITE.transport) return;
+  const rows = [
+    { label: '지하철', value: INVITE.transport.subway },
+    { label: '버스',   value: INVITE.transport.bus },
+    { label: '주차',   value: INVITE.transport.parking },
+  ].filter(r => r.value);
+  root.innerHTML = rows.map(r =>
+    `<div class="transport-row"><div class="transport-label">${r.label}</div><div class="transport-text">${r.value}</div></div>`
+  ).join('');
+}
+
 function renderPhotos() {
   if (!INVITE.photos) return;
   const mainImg = $('[data-photo="main"]');
@@ -413,6 +426,7 @@ function init() {
   preventPinchZoom();
   showTemplateIndicator();
   renderPhotos();
+  renderTransport();
   renderCalendar();
   renderCountdown();
   setInterval(renderCountdown, 1000);

@@ -44,5 +44,10 @@
       "images/gallery/09.webp"
     ]
   },
+  "transport": {
+    "subway": "2호선 강남역 3번 출구 도보 5분",
+    "bus": "146, 360 → 강남역 하차",
+    "parking": "건물 지하 2층 주차 가능"
+  },
   "shareUrl": "https://your-project-id.web.app"
 }

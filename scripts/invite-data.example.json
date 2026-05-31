@@ -1,0 +1,48 @@
+{
+  "groom": {
+    "name": "홍길동",
+    "father": "홍판서",
+    "mother": "김춘섬",
+    "order": "장남"
+  },
+  "bride": {
+    "name": "이영희",
+    "father": "이대감",
+    "mother": "박소사",
+    "order": "장녀"
+  },
+  "date": "2026-11-14T15:30:00+09:00",
+  "venue": {
+    "name": "웨딩홀 이름",
+    "hall": "그랜드볼룸",
+    "address": "서울특별시 강남구 테헤란로 123",
+    "lat": 37.5065,
+    "lng": 127.0536
+  },
+  "accounts": {
+    "groom": [
+      { "role": "신랑", "name": "홍길동", "bank": "국민은행", "number": "000-000000-00-000" },
+      { "role": "아버지", "name": "홍판서", "bank": "국민은행", "number": "000-000000-00-000" },
+      { "role": "어머니", "name": "김춘섬", "bank": "신한은행", "number": "000-000000-00-000" }
+    ],
+    "bride": [
+      { "role": "신부", "name": "이영희", "bank": "신한은행", "number": "000-000000-00-000" },
+      { "role": "아버지", "name": "이대감", "bank": "하나은행", "number": "000-000000-00-000" }
+    ]
+  },
+  "photos": {
+    "main": "images/main.webp",
+    "gallery": [
+      "images/gallery/01.webp",
+      "images/gallery/02.webp",
+      "images/gallery/03.webp",
+      "images/gallery/04.webp",
+      "images/gallery/05.webp",
+      "images/gallery/06.webp",
+      "images/gallery/07.webp",
+      "images/gallery/08.webp",
+      "images/gallery/09.webp"
+    ]
+  },
+  "shareUrl": "https://your-project-id.web.app"
+}

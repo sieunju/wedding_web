@@ -83,6 +83,9 @@ functions/.env.prod
 # IDE 설정
 .idea/
 
+# 실제 청첩장 데이터 (개인정보 포함 — example만 커밋)
+scripts/invite-data.json
+
 # Claude Design 작업 원본 (로컬 작업 파일)
 example/
 

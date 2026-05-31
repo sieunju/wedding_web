@@ -8,6 +8,9 @@ if [ -z "$JAVA_VER" ] || [ "$JAVA_VER" -lt 11 ]; then
   exit 1
 fi
 
+echo "🔥 포트 정리 중 (5000, 5001)..."
+lsof -ti:5000,5001 | xargs kill -9 2>/dev/null || true
+
 echo "🔥 Firebase 에뮬레이터 실행..."
 echo "   Hosting:   http://localhost:5000"
 echo "   Functions: http://localhost:5001"

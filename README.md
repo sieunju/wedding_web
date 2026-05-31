@@ -47,58 +47,71 @@ cp .firebaserc.example .firebaserc
 }
 ```
 
-### 4. Firestore 데이터 입력
+### 4. 서비스 계정 키 설정
 
-Firebase Console → Firestore → `invitations/main` 문서를 생성하세요.
+Firestore·Storage 업로드 스크립트는 Firebase Admin SDK 인증이 필요합니다.
 
-| 필드 | 타입 | 예시 |
-|------|------|------|
-| `groom.name` | string | `홍길동` |
-| `groom.father` | string | `홍판서` |
-| `groom.mother` | string | `김춘섬` |
-| `groom.order` | string | `장남` |
-| `bride.name` | string | `이영희` |
-| `bride.father` | string | `이대감` |
-| `bride.mother` | string | `박소사` |
-| `bride.order` | string | `장녀` |
-| `date` | timestamp | 2026-11-14 15:30 KST |
-| `venue.name` | string | `웨딩홀 이름` |
-| `venue.hall` | string | `그랜드볼룸` |
-| `venue.address` | string | `서울특별시 강남구 테헤란로 123` |
-| `venue.lat` | number | `37.5065` |
-| `venue.lng` | number | `127.0536` |
-| `shareUrl` | string | `https://your-domain.com` |
-| `accounts.groom` | array | 신랑측 계좌 목록 (아래 참고) |
-| `accounts.bride` | array | 신부측 계좌 목록 (아래 참고) |
-| `photos.main` | string | Storage URL 또는 상대경로 |
-| `photos.gallery` | array | 갤러리 이미지 URL 목록 (최대 9장) |
+1. [Firebase 콘솔](https://console.firebase.google.com) → 프로젝트 설정 → **서비스 계정** 탭
+2. **새 비공개 키 생성** → JSON 파일 다운로드
+3. 프로젝트 루트에 `serviceAccountKey.json` 으로 저장
 
-**accounts 구조:**
+> `serviceAccountKey.json` 은 `.gitignore`에 포함되어 있으므로 커밋되지 않습니다.
+
+### 5. 청첩장 데이터 업로드
+
+`scripts/invite-data.json` 을 본인 정보로 수정한 뒤 Firestore에 업로드합니다.
+
+```bash
+node scripts/upload-invite.js scripts/invite-data.json
+```
+
+`invite-data.json` 주요 필드:
+
 ```json
 {
-  "groom": [
-    { "role": "신랑", "name": "홍길동", "bank": "국민은행", "number": "000-000000-00-000" },
-    { "role": "아버지", "name": "홍판서", "bank": "국민은행", "number": "000-000000-00-000" }
-  ],
-  "bride": [
-    { "role": "신부", "name": "이영희", "bank": "신한은행", "number": "000-000000-00-000" }
-  ]
+  "groom": { "name": "홍길동", "father": "홍판서", "mother": "김춘섬", "order": "장남" },
+  "bride": { "name": "이영희", "father": "이대감", "mother": "박소사", "order": "장녀" },
+  "date": "2026-11-14T15:30:00+09:00",
+  "venue": { "name": "웨딩홀 이름", "hall": "그랜드볼룸", "address": "서울 강남구 ...", "lat": 37.5065, "lng": 127.0536 },
+  "accounts": {
+    "groom": [{ "role": "신랑", "name": "홍길동", "bank": "국민은행", "number": "000-000000-00-000" }],
+    "bride": [{ "role": "신부", "name": "이영희", "bank": "신한은행", "number": "000-000000-00-000" }]
+  },
+  "shareUrl": "https://your-domain.com"
 }
 ```
 
-### 5. 웨딩 사진 추가
+> 예시 파일: `scripts/invite-data.example.json`
+
+### 6. 웨딩 사진 변환 및 Storage 업로드
+
+**① 사진 WebP 변환**
 
 ```bash
-# 메인 사진 1장 변환
+# 메인 사진 1장
 bash scripts/convert-main.sh ~/Downloads/main.jpg
 
-# 갤러리 사진 최대 9장 변환
+# 갤러리 사진 최대 9장
 bash scripts/convert-images.sh ~/Downloads/gallery_folder/
 ```
 
 변환된 파일은 `public/images/` 에 저장됩니다 (`.gitignore`에 포함).
 
-### 6. 로컬 개발 서버
+**② Firebase Storage 업로드**
+
+[Firebase 콘솔](https://console.firebase.google.com) → Storage 를 먼저 활성화하세요.
+
+```bash
+# 기본 버킷 사용
+node scripts/upload-photos.js
+
+# asia-northeast1 등 특정 버킷 지정
+STORAGE_BUCKET=버킷이름 node scripts/upload-photos.js
+```
+
+업로드가 완료되면 Storage CDN URL이 Firestore `invitations/main.photos` 에 자동 저장됩니다.
+
+### 7. 로컬 개발 서버
 
 Java 11+ 가 필요합니다 (`brew install openjdk@17`).
 
@@ -130,7 +143,7 @@ Firebase Console → Remote Config → `wedding_template` 파라미터를 추가
 ```
 wedding_web/
 ├── functions/
-│   ├── index.js              # Cloud Function (SSR 진입점)
+│   ├── index.js              # Cloud Function (SSR + A/B 라우팅)
 │   ├── templates/            # 서버사이드 HTML 템플릿
 │   │   ├── template-a.html
 │   │   ├── template-b.html
@@ -143,17 +156,23 @@ wedding_web/
 │   │   ├── styles-b.css      # Template B — Botanical
 │   │   ├── styles-c.css      # Template C — Editorial
 │   │   └── styles-d.css      # Template D — Midnight
+│   ├── fonts/                # Pretendard WOFF2 자체 호스팅
 │   ├── images/               # 개인 사진 (.gitignore에 포함)
 │   │   ├── main.webp
 │   │   └── gallery/
 │   ├── main.js               # 공용 클라이언트 JS
+│   ├── showcase.html         # 4개 템플릿 쇼케이스 (개발용)
 │   └── preview.html          # 4개 템플릿 동시 미리보기
 ├── scripts/
 │   ├── serve-local.sh        # 로컬 에뮬레이터 실행
+│   ├── upload-invite.js      # Firestore 청첩장 데이터 업로드
+│   ├── upload-photos.js      # Firebase Storage 이미지 업로드
 │   ├── convert-main.sh       # 메인 사진 WebP 변환
-│   └── convert-images.sh     # 갤러리 사진 WebP 변환
+│   ├── convert-images.sh     # 갤러리 사진 WebP 변환
+│   └── invite-data.json      # 청첩장 데이터 (.gitignore에 포함)
 ├── firebase.json
 ├── firestore.rules
+├── storage.rules
 └── .gitignore
 ```
 
@@ -172,7 +191,8 @@ wedding_web/
 - **Firebase Functions v2** (Node.js) — SSR, 템플릿 선택, 쿠키 배정
 - **Firebase Firestore** — 청첩장 데이터 저장
 - **Firebase Remote Config** — A/B 템플릿 비율 제어
-- **Pretendard** (CDN) — 단일 한국어 웹폰트
+- **Firebase Storage** — 이미지 CDN (asia-northeast1 권장)
+- **Pretendard** (자체 호스팅 WOFF2) — 단일 한국어 웹폰트
 - 빌드 툴 없음 — 순수 HTML/CSS/Vanilla JS
 
 ## 라이선스

@@ -26,7 +26,9 @@ const admin = require('../functions/node_modules/firebase-admin');
 admin.initializeApp();
 
 const db = admin.firestore();
-const bucket = admin.storage().bucket();
+// 버킷 이름은 Firebase Console → Storage에서 확인 (gs://버킷이름 형식)
+const STORAGE_BUCKET = process.env.STORAGE_BUCKET || '';
+const bucket = admin.storage().bucket(STORAGE_BUCKET || undefined);
 
 const IMAGE_DIR = path.resolve(__dirname, '../public/images');
 

@@ -76,6 +76,11 @@ function sendTemplate(template, invite, setCookie, res) {
   try {
     let html = fs.readFileSync(filePath, 'utf-8');
     if (invite) {
+      const groom = invite.groom?.name ?? '';
+      const bride = invite.bride?.name ?? '';
+      const couple = `${groom} ♡ ${bride}`;
+      html = html.replace(/<title>[^<]*<\/title>/, `<title>${couple} · 모바일 청첩장</title>`);
+      html = html.replace(/(<meta property="og:title" content=")[^"]*(")/,  `$1${couple} 결혼합니다$2`);
       const script = buildInviteScript(invite);
       html = html.replace(/<script>\s*window\.INVITE\s*=[\s\S]*?<\/script>/, script);
     }

@@ -64,6 +64,10 @@ function renderCalendar() {
   setText('[data-date-ymd]', `${year}. ${pad2(month + 1)}. ${pad2(day)}`);
   setText('[data-date-dow-time]', `${DAYS_KO[d.getDay()]}요일 ${formatTimeKo(d)}`);
   setText('[data-venue]', `${INVITE.venue.name} · ${INVITE.venue.hall}`);
+  setText('.venue-name', INVITE.venue.name);
+  setText('.venue-hall', INVITE.venue.hall);
+  setText('.pin-bubble', INVITE.venue.name);
+  setText('#addressText', INVITE.venue.address);
   setText('[data-groom-name]', INVITE.groom.name);
   setText('[data-bride-name]', INVITE.bride.name);
   setText('[data-couple]', `${INVITE.groom.name} · ${INVITE.bride.name}`);

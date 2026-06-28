@@ -1,28 +1,23 @@
 #!/bin/bash
 set -e
-if [ -z "$1" ] || [ ! -d "$1" ]; then
-  echo "Usage: $0 <folder>"
-  exit 1
-fi
 
-OUTPUT_DIR="public/images/gallery"
-mkdir -p "$OUTPUT_DIR"
+SRC_DIR="public/images"
 
 FILES=()
 while IFS= read -r f; do
   FILES+=("$f")
-done < <(find "$1" -maxdepth 1 \( -iname "*.jpg" -o -iname "*.jpeg" \) | sort | head -9)
+done < <(find "$SRC_DIR" -maxdepth 2 \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | sort)
 
 if [ ${#FILES[@]} -eq 0 ]; then
-  echo "❌ JPG 파일을 찾을 수 없습니다."
+  echo "❌ 변환할 JPG/PNG 파일이 없습니다: $SRC_DIR"
   exit 1
 fi
 
-echo "📸 ${#FILES[@]}장 변환 시작..."
-for i in "${!FILES[@]}"; do
-  NUM=$(printf "%02d" $((i + 1)))
-  OUT="$OUTPUT_DIR/$NUM.webp"
-  echo "  $((i+1))/${#FILES[@]}: $(basename "${FILES[$i]}") → $NUM.webp"
-  convert "${FILES[$i]}" -auto-orient -resize 1200x -quality 100 -define webp:lossless=false "$OUT"
+echo "📸 ${#FILES[@]}개 변환 시작..."
+for f in "${FILES[@]}"; do
+  OUT="${f%.*}.webp"
+  echo "  $(basename "$f") → $(basename "$OUT")"
+  magick "$f" -auto-orient -resize 1200x -quality 100 -define webp:lossless=false "$OUT"
+  rm "$f"
 done
-echo "✅ 완료: $OUTPUT_DIR/"
+echo "✅ 완료"

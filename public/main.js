@@ -346,12 +346,11 @@ function setupReveal() {
 
 function setupParallax() {
   if (PREFERS_REDUCE) return;
-  const sel = ['.hero-img', '.hero-photo img', '.cover .hero-photo img', '.gallery img', '.gallery-grid img', '.gallery-grid-9 img', '.g-grid img', '.g-grid-9 img', '.gallery-strip img', '[data-parallax]'].join(',');
+  const sel = ['.gallery img', '.gallery-grid img', '.gallery-grid-9 img', '.g-grid img', '.g-grid-9 img', '.gallery-strip img', '[data-parallax]'].join(',');
   const imgs = [...new Set($$(sel))];
   if (!imgs.length) return;
   imgs.forEach(img => {
-    const isHero = img.classList.contains('hero-img') || img.closest('.hero-photo') || img.closest('.hero') || img.closest('.cover');
-    img.dataset.pAmt = isHero ? '22' : '11';
+    img.dataset.pAmt = '11';
     img.style.willChange = 'auto';
   });
   let ticking = false;

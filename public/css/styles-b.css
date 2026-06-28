@@ -111,6 +111,7 @@ img { display: block; max-width: 100%; }
   color: var(--accent);
   margin-bottom: 14px;
   font-weight: 400;
+  text-shadow: 0 0 12px rgba(245,237,227,1), 0 0 24px rgba(245,237,227,0.9);
 }
 .hero-names {
   font-family: var(--font-serif);

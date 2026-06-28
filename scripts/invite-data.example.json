@@ -32,6 +32,12 @@
   },
   "photos": {
     "main": "images/main.webp",
+    "mainByTemplate": {
+      "a": "",
+      "b": "",
+      "c": "",
+      "d": ""
+    },
     "gallery": [
       "images/gallery/01.webp",
       "images/gallery/02.webp",

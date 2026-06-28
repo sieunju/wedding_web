@@ -54,8 +54,10 @@ function parseCookies(header) {
   return cookies;
 }
 
-function buildInviteScript(data) {
+function buildInviteScript(data, template) {
   if (!data) return '';
+  const photos = data.photos ?? {};
+  const resolvedMain = (template && photos.mainByTemplate?.[template]) || photos.main || '';
   const invite = {
     groom: data.groom ?? {},
     bride: data.bride ?? {},
@@ -63,7 +65,7 @@ function buildInviteScript(data) {
     venue: data.venue ?? {},
     shareUrl: data.shareUrl ?? '',
     accounts: data.accounts ?? { groom: [], bride: [] },
-    photos: data.photos ?? {},
+    photos: { ...photos, main: resolvedMain },
     transport: data.transport ?? {},
     maps: data.maps ?? {},
   };
@@ -83,7 +85,7 @@ function sendTemplate(template, invite, setCookie, res) {
       const couple = `${groom} ♡ ${bride}`;
       html = html.replace(/<title>[^<]*<\/title>/, `<title>${couple} · 모바일 청첩장</title>`);
       html = html.replace(/(<meta property="og:title" content=")[^"]*(")/,  `$1${couple} 결혼합니다$2`);
-      const script = buildInviteScript(invite);
+      const script = buildInviteScript(invite, template);
       html = html.replace(/<script>\s*window\.INVITE\s*=[\s\S]*?<\/script>/, script);
     }
     if (setCookie) {

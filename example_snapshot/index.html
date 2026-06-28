@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>모바일 청첩장 템플릿 미리보기</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f5f5;
+    color: #222;
+    padding: 48px 24px;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 40px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: block;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .card-preview {
+    width: 100%;
+    aspect-ratio: 9/16;
+    border: none;
+    display: block;
+    pointer-events: none;
+  }
+  .card-body {
+    padding: 16px;
+    border-top: 1px solid #f0f0f0;
+  }
+  .card-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  .card-name {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: #888;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+<h1>모바일 청첩장 템플릿</h1>
+<p class="subtitle">클릭하면 전체 미리보기를 볼 수 있습니다</p>
+<div class="grid">
+  <a class="card" href="invite-A-pastel.html" target="_blank">
+    <iframe class="card-preview" src="invite-A-pastel.html" scrolling="no" tabindex="-1"></iframe>
+    <div class="card-body">
+      <div class="card-label">Template A</div>
+      <div class="card-name">Pastel</div>
+      <div class="card-desc">따뜻한 파스텔 톤, 미니멀 레이아웃</div>
+    </div>
+  </a>
+  <a class="card" href="invite-B-mint.html" target="_blank">
+    <iframe class="card-preview" src="invite-B-mint.html" scrolling="no" tabindex="-1"></iframe>
+    <div class="card-body">
+      <div class="card-label">Template B</div>
+      <div class="card-name">Mint</div>
+      <div class="card-desc">민트 보태니컬, 자연스러운 그린 팔레트</div>
+    </div>
+  </a>
+  <a class="card" href="invite-C-editorial.html" target="_blank">
+    <iframe class="card-preview" src="invite-C-editorial.html" scrolling="no" tabindex="-1"></iframe>
+    <div class="card-body">
+      <div class="card-label">Template C</div>
+      <div class="card-name">Editorial</div>
+      <div class="card-desc">세리프 타이포그래피, 에디토리얼 감성</div>
+    </div>
+  </a>
+  <a class="card" href="invite-D-midnight.html" target="_blank">
+    <iframe class="card-preview" src="invite-D-midnight.html" scrolling="no" tabindex="-1"></iframe>
+    <div class="card-body">
+      <div class="card-label">Template D</div>
+      <div class="card-name">Midnight</div>
+      <div class="card-desc">다크 배경, 고급스러운 미드나잇 무드</div>
+    </div>
+  </a>
+</div>
+</body>
+</html>

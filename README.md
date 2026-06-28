@@ -2,6 +2,17 @@
 
 누구나 fork해서 자신의 청첩장으로 커스터마이징할 수 있는 모바일 청첩장 템플릿입니다.
 
+## 템플릿 미리보기
+
+**[→ 전체 미리보기 (GitHub Pages)](https://sieunju.github.io/wedding_web/example_snapshot/)**
+
+| Template A — Pastel | Template B — Mint | Template C — Editorial | Template D — Midnight |
+|---|---|---|---|
+| [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-A-pastel.html) | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-B-mint.html) | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-C-editorial.html) | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-D-midnight.html) |
+| 따뜻한 파스텔 톤 | 민트 보태니컬 | 세리프 에디토리얼 | 다크 미드나잇 |
+
+---
+
 ## 특징
 
 - **4가지 디자인 테마** — A: Minimal / B: Botanical / C: Editorial / D: Midnight

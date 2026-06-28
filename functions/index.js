@@ -65,6 +65,7 @@ function buildInviteScript(data) {
     accounts: data.accounts ?? { groom: [], bride: [] },
     photos: data.photos ?? {},
     transport: data.transport ?? {},
+    maps: data.maps ?? {},
   };
   const json = JSON.stringify(invite, null, 2)
     .replace('"__DATE__', "new Date('")

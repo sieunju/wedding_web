@@ -38,8 +38,7 @@ const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 function pad2(n) { return String(n).padStart(2, '0'); }
 
 function setText(sel, text) {
-  const el = $(sel);
-  if (el) el.textContent = text;
+  $$(sel).forEach(el => { el.textContent = text; });
 }
 
 function formatTimeKo(d) {
@@ -98,6 +97,27 @@ function renderCalendar() {
       cell.appendChild(num);
     }
     grid.appendChild(cell);
+  });
+}
+
+function renderParents() {
+  const cols = $$('.parent-col, .p-col');
+  if (cols.length < 2) return;
+  [[cols[0], INVITE.groom], [cols[1], INVITE.bride]].forEach(([col, person]) => {
+    const names = $('.parent-names, .p-parents', col);
+    if (names) names.textContent = `${person.father} · ${person.mother}`;
+
+    const child = $('.parent-child', col);
+    if (child) child.textContent = `${person.order} ${person.name}`;
+
+    const pName = $('.p-name', col);
+    if (pName) {
+      const strong = pName.querySelector('strong');
+      if (strong) strong.textContent = person.name;
+      if (pName.firstChild?.nodeType === Node.TEXT_NODE) {
+        pName.firstChild.textContent = `의 ${person.order} `;
+      }
+    }
   });
 }
 
@@ -187,45 +207,17 @@ function setupAddressCopy() {
 function setupMapLinks() {
   const v = INVITE.venue;
   const enc = encodeURIComponent(v.name);
-  const links = {
-    naver: { app: '네이버지도', deeplink: `nmap://place?lat=${v.lat}&lng=${v.lng}&name=${enc}&appname=wedding.invite`, web: `https://map.naver.com/v5/search/${enc}` },
-    kakao: { app: '카카오맵', deeplink: `kakaomap://look?p=${v.lat},${v.lng}`, web: `https://map.kakao.com/link/to/${enc},${v.lat},${v.lng}` },
-    tmap:  { app: '티맵', deeplink: `tmap://route?goalname=${enc}&goalx=${v.lng}&goaly=${v.lat}`, web: `https://tmap.life/` },
+  const defaults = {
+    naver: `https://map.naver.com/v5/search/${enc}`,
+    kakao: `https://map.kakao.com/link/to/${enc},${v.lat},${v.lng}`,
+    tmap:  `https://tmap.life/`,
   };
+  const m = INVITE.maps ?? {};
   $$('.map-btn').forEach(btn => {
-    btn.addEventListener('click', () => { const cfg = links[btn.dataset.map]; if (cfg) openMapModal(cfg); });
+    const key = btn.dataset.map;
+    const url = m[key] || defaults[key];
+    if (url) btn.addEventListener('click', () => window.open(url, '_blank'));
   });
-  const modal = $('#mapModal');
-  if (modal) modal.addEventListener('click', e => { if (e.target.dataset.close !== undefined) closeMapModal(); });
-}
-
-let _currentMap = null;
-function openMapModal(cfg) {
-  _currentMap = cfg;
-  setText('#mtAppName', cfg.app);
-  setText('#mtDeeplink', cfg.deeplink);
-  setText('#mtFallback', cfg.web);
-  const m = $('#mapModal');
-  if (m) { m.hidden = false; document.body.style.overflow = 'hidden'; }
-}
-function closeMapModal() {
-  const m = $('#mapModal');
-  if (m) m.hidden = true;
-  document.body.style.overflow = '';
-  _currentMap = null;
-}
-function openMapApp(cfg) {
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  if (!isMobile) { window.open(cfg.web, '_blank'); return; }
-  const start = Date.now();
-  const timer = setTimeout(() => { if (Date.now() - start < 2000 && !document.hidden) window.location.href = cfg.web; }, 1500);
-  const onHide = () => { if (document.hidden) clearTimeout(timer); document.removeEventListener('visibilitychange', onHide); };
-  document.addEventListener('visibilitychange', onHide);
-  window.location.href = cfg.deeplink;
-}
-
-function setupMapOpen() {
-  $('#mtOpenBtn')?.addEventListener('click', () => { if (_currentMap) openMapApp(_currentMap); closeMapModal(); });
 }
 
 let toastTimer = null;
@@ -241,9 +233,7 @@ function showToast(msg) {
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     const sm = $('#shareModal');
-    const mm = $('#mapModal');
     if (sm && !sm.hidden) { sm.hidden = true; document.body.style.overflow = ''; }
-    if (mm && !mm.hidden) closeMapModal();
   }
 });
 
@@ -432,13 +422,13 @@ function init() {
   renderPhotos();
   renderTransport();
   renderCalendar();
+  renderParents();
   renderCountdown();
   setInterval(renderCountdown, 1000);
   setupLargeText();
   setupShareSheet();
   setupAddressCopy();
   setupMapLinks();
-  setupMapOpen();
   renderAccounts();
   function armScrollFX() { setupHeroIntro(); setupReveal(); setupParallax(); }
   if (PREFERS_REDUCE) {

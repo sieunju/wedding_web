@@ -49,5 +49,10 @@
     "bus": "146, 360 → 강남역 하차",
     "parking": "건물 지하 2층 주차 가능"
   },
+  "maps": {
+    "naver": "https://naver.me/xxxxxxxx",
+    "kakao": "https://place.map.kakao.com/xxxxxxxx",
+    "tmap": "https://tmap.life/xxxxx"
+  },
   "shareUrl": "https://your-project-id.web.app"
 }

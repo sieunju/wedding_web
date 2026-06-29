@@ -150,7 +150,6 @@ cp scripts/invite-data.example.json scripts/invite-data.json
     "tmap": "https://tmap.life/xxxxx"
   },
   "photos": {
-    "main": "https://firebasestorage.googleapis.com/...",
     "mainByTemplate": {
       "a": "",
       "b": "",
@@ -176,8 +175,7 @@ cp scripts/invite-data.example.json scripts/invite-data.json
 | `accounts` | 계좌 목록 (여러 개 가능) |
 | `transport.subway/bus/parking` | 교통 안내 — 빈 값이면 항목 숨김 |
 | `maps.naver/kakao/tmap` | 각 지도 앱 공유 링크 — 빈 값이면 위도·경도 기반 기본 링크 사용 |
-| `photos.main` | 공통 메인 사진 URL (Firebase Storage) |
-| `photos.mainByTemplate.a~d` | 템플릿별 메인 사진 개별 지정 — 빈 값이면 `photos.main` 사용 |
+| `photos.mainByTemplate.a~d` | 템플릿별 메인 사진 URL (Firebase Storage) |
 | `photos.gallery` | 갤러리 사진 URL 배열 |
 | `shareUrl` | 청첩장 공유 URL |
 

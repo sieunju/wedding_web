@@ -32,21 +32,15 @@
   },
   "photos": {
     "mainByTemplate": {
-      "a": "",
-      "b": "",
-      "c": "",
-      "d": ""
+      "a": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/a-main.webp?alt=media",
+      "b": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/b-main.webp?alt=media",
+      "c": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/c-main.webp?alt=media",
+      "d": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/d-main.webp?alt=media"
     },
     "gallery": [
-      "images/gallery/01.webp",
-      "images/gallery/02.webp",
-      "images/gallery/03.webp",
-      "images/gallery/04.webp",
-      "images/gallery/05.webp",
-      "images/gallery/06.webp",
-      "images/gallery/07.webp",
-      "images/gallery/08.webp",
-      "images/gallery/09.webp"
+      "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/gallery%2F01.webp?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/gallery%2F02.webp?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/gallery%2F03.webp?alt=media"
     ]
   },
   "transport": {

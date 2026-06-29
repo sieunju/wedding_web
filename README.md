@@ -151,14 +151,14 @@ cp scripts/invite-data.example.json scripts/invite-data.json
   },
   "photos": {
     "mainByTemplate": {
-      "a": "",
-      "b": "",
-      "c": "",
-      "d": ""
+      "a": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/a-main.webp?alt=media",
+      "b": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/b-main.webp?alt=media",
+      "c": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/c-main.webp?alt=media",
+      "d": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/d-main.webp?alt=media"
     },
     "gallery": [
-      "https://firebasestorage.googleapis.com/...",
-      "..."
+      "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/gallery%2F01.webp?alt=media",
+      "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/gallery%2F02.webp?alt=media"
     ]
   },
   "shareUrl": "https://your-project-id.web.app"

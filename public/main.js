@@ -390,10 +390,12 @@ function renderPhotos() {
   const mainImg = $('[data-photo="main"]');
   if (mainImg && INVITE.photos.main) mainImg.src = INVITE.photos.main;
   const gallery = INVITE.photos.gallery || [];
-  gallery.forEach((url, i) => {
-    const img = $(`[data-photo="gallery-${i}"]`);
-    if (img) img.src = url;
-  });
+  if (!gallery.length) return;
+  const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
+  if (!container) return;
+  container.innerHTML = gallery.map(url =>
+    `<img src="${url}" alt="" loading="lazy" />`
+  ).join('');
 }
 
 function preventPinchZoom() {

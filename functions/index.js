@@ -57,7 +57,6 @@ function parseCookies(header) {
 function buildInviteScript(data, template) {
   if (!data) return '';
   const photos = data.photos ?? {};
-  const resolvedMain = (template && photos.mainByTemplate?.[template]) || photos.main || '';
   const invite = {
     groom: data.groom ?? {},
     bride: data.bride ?? {},
@@ -65,7 +64,7 @@ function buildInviteScript(data, template) {
     venue: data.venue ?? {},
     shareUrl: data.shareUrl ?? '',
     accounts: data.accounts ?? { groom: [], bride: [] },
-    photos: { ...photos, main: resolvedMain },
+    photos: { main: photos.mainByTemplate?.[template] ?? '', gallery: photos.gallery ?? [] },
     transport: data.transport ?? {},
     maps: data.maps ?? {},
   };

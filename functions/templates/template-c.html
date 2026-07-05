@@ -246,6 +246,19 @@ window.INVITE = {
 
 <div class="toast" id="toast" hidden></div>
 
+<div class="modal gallery-viewer" id="galleryViewer" hidden>
+  <div class="modal-overlay gallery-viewer-overlay" data-close></div>
+  <div class="gallery-viewer-card">
+    <button class="gv-close" type="button" data-close aria-label="닫기">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <button class="gv-prev" type="button" aria-label="이전">&#8249;</button>
+    <img class="gv-img" src="" alt="" />
+    <button class="gv-next" type="button" aria-label="다음">&#8250;</button>
+    <div class="gv-dots"></div>
+  </div>
+</div>
+
 <script src="/main.js"></script>
 </body>
 </html>

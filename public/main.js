@@ -393,9 +393,66 @@ function renderPhotos() {
   if (!gallery.length) return;
   const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
   if (!container) return;
-  container.innerHTML = gallery.map(url =>
-    `<img src="${url}" alt="" loading="lazy" />`
+  container.innerHTML = gallery.map((url, i) =>
+    `<img src="${url}" alt="" loading="lazy" data-gallery-index="${i}" />`
   ).join('');
+  setupGalleryViewer();
+}
+
+function setupGalleryViewer() {
+  const viewer = $('#galleryViewer');
+  if (!viewer) return;
+  const img = viewer.querySelector('.gv-img');
+  const dotsEl = viewer.querySelector('.gv-dots');
+  const gallery = INVITE.photos?.gallery || [];
+  let current = 0;
+
+  dotsEl.innerHTML = gallery.map((_, i) =>
+    `<span class="gv-dot${i === 0 ? ' active' : ''}"></span>`
+  ).join('');
+  const dots = [...dotsEl.querySelectorAll('.gv-dot')];
+
+  function show(idx) {
+    current = (idx + gallery.length) % gallery.length;
+    img.src = gallery[current];
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function open(idx) {
+    show(idx);
+    viewer.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    viewer.hidden = true;
+    document.body.style.overflow = '';
+    img.src = '';
+  }
+
+  const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
+  if (container) {
+    container.addEventListener('click', e => {
+      const el = e.target.closest('[data-gallery-index]');
+      if (el) open(+el.dataset.galleryIndex);
+    });
+  }
+
+  viewer.querySelector('.gv-prev').addEventListener('click', () => show(current - 1));
+  viewer.querySelector('.gv-next').addEventListener('click', () => show(current + 1));
+
+  viewer.addEventListener('click', e => {
+    if (e.target.dataset.close !== undefined) close();
+  });
+
+  let tx = 0;
+  img.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  img.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) dx < 0 ? show(current + 1) : show(current - 1);
+  }, { passive: true });
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !viewer.hidden) close(); });
 }
 
 function preventPinchZoom() {

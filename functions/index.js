@@ -83,7 +83,30 @@ function sendTemplate(template, invite, setCookie, res) {
       const bride = invite.bride?.name ?? '';
       const couple = `${groom} ♡ ${bride}`;
       html = html.replace(/<title>[^<]*<\/title>/, `<title>${couple} · 모바일 청첩장</title>`);
-      html = html.replace(/(<meta property="og:title" content=")[^"]*(")/,  `$1${couple} 결혼합니다$2`);
+      html = html.replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${couple} 결혼합니다$2`);
+
+      const ogImage = invite.photos?.mainByTemplate?.[template] ?? '';
+      if (ogImage) {
+        html = html.replace(/(<meta property="og:image" content=")[^"]*(")/, `$1${ogImage}$2`);
+      }
+
+      const ogUrl = invite.shareUrl ?? '';
+      if (ogUrl) {
+        html = html.replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${ogUrl}$2`);
+      }
+
+      const venueName = invite.venue?.name ?? '';
+      const dateObj = invite.date ? new Date(invite.date) : null;
+      const dateStr = dateObj
+        ? new Intl.DateTimeFormat('ko-KR', {
+            timeZone: 'Asia/Seoul', year: 'numeric', month: 'long', day: 'numeric',
+          }).format(dateObj)
+        : '';
+      const ogDescription = [dateStr, venueName].filter(Boolean).join(' · ');
+      if (ogDescription) {
+        html = html.replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${ogDescription}$2`);
+      }
+
       const script = buildInviteScript(invite, template);
       html = html.replace(/<script>\s*window\.INVITE\s*=[\s\S]*?<\/script>/, script);
     }

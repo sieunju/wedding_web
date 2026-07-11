@@ -20,6 +20,7 @@
 - **Remote Config** 로 템플릿 비율 조정 (`wedding_template` 파라미터)
 - **Firestore** 에서 청첩장 데이터 실시간 주입 — 코드 수정 없이 데이터만 교체
 - 계좌번호 복사, 네이버·카카오·티맵 지도 링크, 공유 시트, 큰글씨 모드
+- **카카오톡·문자 공유 미리보기(OG 태그) 자동 생성** — 신랑·신부 이름, 예식 날짜·장소, 대표 사진을 서버에서 주입
 - **Pretendard** 자체 호스팅 — Google Fonts 외부 의존 없음
 - 빌드 툴 없음 — 순수 HTML / CSS / Vanilla JS
 
@@ -177,7 +178,9 @@ cp scripts/invite-data.example.json scripts/invite-data.json
 | `maps.naver/kakao/tmap` | 각 지도 앱 공유 링크 — 빈 값이면 위도·경도 기반 기본 링크 사용 |
 | `photos.mainByTemplate.a~d` | 템플릿별 메인 사진 URL (Firebase Storage) |
 | `photos.gallery` | 갤러리 사진 URL 배열 |
-| `shareUrl` | 청첩장 공유 URL |
+| `shareUrl` | 청첩장 공유 URL — 카카오톡·문자 공유 시 `og:url` 로 사용 |
+
+> **공유 미리보기(OG 태그)**: `groom`/`bride` 이름, `date`, `venue.name`, `photos.mainByTemplate.{템플릿}`, `shareUrl` 값을 조합해 방문 시점에 `og:title`/`og:description`/`og:image`/`og:url` 이 서버(`functions/index.js`)에서 자동으로 채워집니다. 별도 설정이 필요 없습니다.
 
 #### Firestore 업로드
 

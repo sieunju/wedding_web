@@ -400,6 +400,19 @@ img { display: block; max-width: 100%; }
   font-family: var(--font-sans);
 }
 
+.links { margin-top: 8px; }
+.link-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  text-decoration: none;
+}
+.link-row:last-child { border-bottom: none; }
+.link-title { font-size: calc(13px * var(--scale)); }
+.link-arrow { color: var(--accent); }
+
 /* ── FOOTER ── */
 .footer {
   padding: 64px 24px 80px;

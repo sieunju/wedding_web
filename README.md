@@ -6,10 +6,10 @@
 
 **[→ 전체 미리보기 (GitHub Pages)](https://sieunju.github.io/wedding_web/example_snapshot/)**
 
-| Template A — Pastel | Template B — Mint | Template C — Editorial | Template D — Midnight |
-|---|---|---|---|
+| Template A — Pastel                                                                     | Template B — Mint                                                                     | Template C — Editorial                                                                     | Template D — Midnight                                                                     |
+| --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-A-pastel.html) | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-B-mint.html) | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-C-editorial.html) | [미리보기](https://sieunju.github.io/wedding_web/example_snapshot/invite-D-midnight.html) |
-| 따뜻한 파스텔 톤 | 민트 보태니컬 | 세리프 에디토리얼 | 다크 미드나잇 |
+| 따뜻한 파스텔 톤                                                                        | 민트 보태니컬                                                                         | 세리프 에디토리얼                                                                          | 다크 미드나잇                                                                             |
 
 ---
 
@@ -47,12 +47,12 @@ cd functions && npm install && cd ..
 
 [Firebase Console](https://console.firebase.google.com) 에서 새 프로젝트를 만든 뒤 아래 서비스를 활성화하세요.
 
-| 서비스 | 용도 |
-|---|---|
-| **Firestore Database** | 청첩장 데이터 저장 |
-| **Firebase Hosting** | 정적 파일 및 Functions 연결 |
+| 서비스                 | 용도                                         |
+| ---------------------- | -------------------------------------------- |
+| **Firestore Database** | 청첩장 데이터 저장                           |
+| **Firebase Hosting**   | 정적 파일 및 Functions 연결                  |
 | **Firebase Functions** | SSR 및 A/B 템플릿 라우팅 (Blaze 요금제 필요) |
-| **Firebase Storage** | 웨딩 사진 CDN |
+| **Firebase Storage**   | 웨딩 사진 CDN                                |
 
 ---
 
@@ -132,10 +132,20 @@ cp scripts/invite-data.example.json scripts/invite-data.json
   },
   "accounts": {
     "groom": [
-      { "role": "신랑", "name": "홍길동", "bank": "국민은행", "number": "000-000000-00-000" }
+      {
+        "role": "신랑",
+        "name": "홍길동",
+        "bank": "국민은행",
+        "number": "000-000000-00-000"
+      }
     ],
     "bride": [
-      { "role": "신부", "name": "이영희", "bank": "신한은행", "number": "000-000000-00-000" }
+      {
+        "role": "신부",
+        "name": "이영희",
+        "bank": "신한은행",
+        "number": "000-000000-00-000"
+      }
     ]
   },
   "transport": {
@@ -148,6 +158,10 @@ cp scripts/invite-data.example.json scripts/invite-data.json
     "kakao": "https://place.map.kakao.com/xxxxxxxx",
     "tmap": "https://tmap.life/xxxxx"
   },
+  "links": [
+    { "title": "우리의 인스타그램", "linkUrl": "https://instagram.com/xxxxxxxx" },
+    { "title": "신혼여행 브이로그", "linkUrl": "https://youtube.com/xxxxxxxx" }
+  ],
   "photos": {
     "mainByTemplate": {
       "a": "https://firebasestorage.googleapis.com/v0/b/your-project-id.firebasestorage.app/o/a-main.webp?alt=media",
@@ -166,17 +180,18 @@ cp scripts/invite-data.example.json scripts/invite-data.json
 
 #### 필드 설명
 
-| 필드 | 설명 |
-|---|---|
-| `groom` / `bride` | 신랑·신부 이름, 부모님 성함, 서열 (장남/차녀 등) |
-| `date` | ISO 8601 형식, 한국 시간 `+09:00` 필수 |
-| `venue` | 웨딩홀 이름·홀·주소·위도·경도 |
-| `accounts` | 계좌 목록 (여러 개 가능) |
-| `transport.subway/bus/parking` | 교통 안내 — 빈 값이면 항목 숨김 |
-| `maps.naver/kakao/tmap` | 각 지도 앱 공유 링크 — 빈 값이면 위도·경도 기반 기본 링크 사용 |
-| `photos.mainByTemplate.a~d` | 템플릿별 메인 사진 URL (Firebase Storage) |
-| `photos.gallery` | 갤러리 사진 URL 배열 |
-| `shareUrl` | 청첩장 공유 URL — 카카오톡·문자 공유 시 `og:url` 로 사용 |
+| 필드                           | 설명                                                           |
+| ------------------------------ | -------------------------------------------------------------- |
+| `groom` / `bride`              | 신랑·신부 이름, 부모님 성함, 서열 (장남/차녀 등)               |
+| `date`                         | ISO 8601 형식, 한국 시간 `+09:00` 필수                         |
+| `venue`                        | 웨딩홀 이름·홀·주소·위도·경도                                  |
+| `accounts`                     | 계좌 목록 (여러 개 가능)                                       |
+| `transport.subway/bus/parking` | 교통 안내 — 빈 값이면 항목 숨김                                |
+| `maps.naver/kakao/tmap`        | 각 지도 앱 공유 링크 — 빈 값이면 위도·경도 기반 기본 링크 사용 |
+| `links`                        | 기타 링크 목록 (선택). `title`(표시 제목), `linkUrl`(연결 주소)로 구성된 객체 배열 — 새 탭으로 열림. 없으면 섹션 자체가 숨겨짐 |
+| `photos.mainByTemplate.a~d`    | 템플릿별 메인 사진 URL (Firebase Storage)                      |
+| `photos.gallery`               | 갤러리 사진 URL 배열                                           |
+| `shareUrl`                     | 청첩장 공유 URL — 카카오톡·문자 공유 시 `og:url` 로 사용       |
 
 > **공유 미리보기(OG 태그)**: `groom`/`bride` 이름, `date`, `venue.name`, `photos.mainByTemplate.{템플릿}`, `shareUrl` 값을 조합해 방문 시점에 `og:title`/`og:description`/`og:image`/`og:url` 이 서버(`functions/index.js`)에서 자동으로 채워집니다. 별도 설정이 필요 없습니다.
 
@@ -228,6 +243,7 @@ STORAGE_BUCKET=your-project-id.firebasestorage.app node scripts/upload-photos.js
 콘솔에서 직접 파일을 업로드한 뒤, URL을 복사해서 `invite-data.json` 의 `photos` 필드에 붙여넣으세요.
 
 Firebase Storage 공개 URL 형식:
+
 ```
 https://firebasestorage.googleapis.com/v0/b/{버킷명}/o/{파일명}.webp?alt=media
 ```
@@ -264,11 +280,11 @@ brew install openjdk@17
 bash scripts/serve-local.sh
 ```
 
-| 주소 | 설명 |
-|---|---|
-| `http://localhost:5000` | 청첩장 메인 |
-| `http://localhost:5000/?t=a` | 템플릿 A 강제 확인 (a/b/c/d) |
-| `http://localhost:5000/showcase.html` | 4개 템플릿 동시 쇼케이스 |
+| 주소                                  | 설명                         |
+| ------------------------------------- | ---------------------------- |
+| `http://localhost:5000`               | 청첩장 메인                  |
+| `http://localhost:5000/?t=a`          | 템플릿 A 강제 확인 (a/b/c/d) |
+| `http://localhost:5000/showcase.html` | 4개 템플릿 동시 쇼케이스     |
 
 ---
 
@@ -336,14 +352,14 @@ wedding_web/
 
 ## 기술 스택
 
-| 항목 | 내용 |
-|---|---|
-| Firebase Hosting | CDN 및 Functions 리라이트 |
+| 항목                            | 내용                        |
+| ------------------------------- | --------------------------- |
+| Firebase Hosting                | CDN 및 Functions 리라이트   |
 | Firebase Functions v2 (Node.js) | SSR, 템플릿 선택, 쿠키 배정 |
-| Firebase Firestore | 청첩장 데이터 저장 |
-| Firebase Storage | 이미지 CDN |
-| Pretendard (자체 호스팅 WOFF2) | 한국어 웹폰트 |
-| HTML / CSS / Vanilla JS | 빌드 툴 없음 |
+| Firebase Firestore              | 청첩장 데이터 저장          |
+| Firebase Storage                | 이미지 CDN                  |
+| Pretendard (자체 호스팅 WOFF2)  | 한국어 웹폰트               |
+| HTML / CSS / Vanilla JS         | 빌드 툴 없음                |
 
 ---
 

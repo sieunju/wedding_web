@@ -53,5 +53,9 @@
     "kakao": "https://place.map.kakao.com/xxxxxxxx",
     "tmap": "https://tmap.life/xxxxx"
   },
+  "links": [
+    { "title": "우리의 인스타그램", "linkUrl": "https://instagram.com/xxxxxxxx" },
+    { "title": "신혼여행 브이로그", "linkUrl": "https://youtube.com/xxxxxxxx" }
+  ],
   "shareUrl": "https://your-project-id.web.app"
 }

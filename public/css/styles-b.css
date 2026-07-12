@@ -431,6 +431,17 @@ img { display: block; max-width: 100%; }
 }
 .transport-text { font-size: calc(12px * var(--scale)); color: var(--text-primary); line-height: 1.6; }
 
+.links { margin-top: 12px; }
+.link-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.link-title { font-size: calc(12px * var(--scale)); }
+.link-arrow { color: var(--accent); }
+
 /* ──── FOOTER ──── */
 .footer { padding: 40px 28px 64px; text-align: center; background: var(--bg-alt); }
 .footer-msg {

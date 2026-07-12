@@ -53,6 +53,7 @@ function buildInviteScript(data, template) {
     photos: { main: photos.mainByTemplate?.[template] ?? '', gallery: photos.gallery ?? [] },
     transport: data.transport ?? {},
     maps: data.maps ?? {},
+    links: data.links ?? [],
   };
   const json = JSON.stringify(invite, null, 2)
     .replace('"__DATE__', "new Date('")

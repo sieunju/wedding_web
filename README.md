@@ -16,8 +16,7 @@
 ## 특징
 
 - **4가지 디자인 테마** — A: Minimal / B: Botanical / C: Editorial / D: Midnight
-- **Firebase Functions SSR** — 방문자마다 A/B 템플릿 자동 배정 (쿠키 30일 유지)
-- **Remote Config** 로 템플릿 비율 조정 (`wedding_template` 파라미터)
+- **Firebase Functions SSR** — 방문자마다 A/B 템플릿 무작위 자동 배정 (쿠키 30일 유지)
 - **Firestore** 에서 청첩장 데이터 실시간 주입 — 코드 수정 없이 데이터만 교체
 - 계좌번호 복사, 네이버·카카오·티맵 지도 링크, 공유 시트, 큰글씨 모드
 - **카카오톡·문자 공유 미리보기(OG 태그) 자동 생성** — 신랑·신부 이름, 예식 날짜·장소, 대표 사진을 서버에서 주입
@@ -54,7 +53,6 @@ cd functions && npm install && cd ..
 | **Firebase Hosting** | 정적 파일 및 Functions 연결 |
 | **Firebase Functions** | SSR 및 A/B 템플릿 라우팅 (Blaze 요금제 필요) |
 | **Firebase Storage** | 웨딩 사진 CDN |
-| **Remote Config** | A/B 템플릿 비율 조정 (선택) |
 
 ---
 
@@ -295,11 +293,7 @@ firebase deploy --only hosting     # 정적 파일(CSS/JS) 변경 시
 
 1. URL 파라미터 `?t=a` (미리보기·테스트용)
 2. 쿠키 `wt` (이전 방문 시 배정된 템플릿, 30일 유지)
-3. Remote Config `wedding_template` 파라미터 값
-4. `isActive=true` 템플릿 중 랜덤 배정 후 쿠키 저장
-
-**Remote Config 설정 방법:**  
-Firebase Console → Remote Config → 파라미터 추가 → 키: `wedding_template` / 값: `a`, `b`, `c`, `d` 중 하나
+3. `isActive=true` 템플릿 중 랜덤 배정 후 쿠키 저장
 
 ---
 
@@ -345,7 +339,6 @@ wedding_web/
 | Firebase Hosting | CDN 및 Functions 리라이트 |
 | Firebase Functions v2 (Node.js) | SSR, 템플릿 선택, 쿠키 배정 |
 | Firebase Firestore | 청첩장 데이터 저장 |
-| Firebase Remote Config | A/B 템플릿 비율 제어 |
 | Firebase Storage | 이미지 CDN |
 | Pretendard (자체 호스팅 WOFF2) | 한국어 웹폰트 |
 | HTML / CSS / Vanilla JS | 빌드 툴 없음 |

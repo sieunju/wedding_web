@@ -361,6 +361,19 @@ img { display: block; max-width: 100%; }
   color: var(--text-secondary);
 }
 
+.links { margin-top: 8px; }
+.link-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-family: var(--font-serif);
+  text-decoration: none;
+}
+.link-row:last-child { border-bottom: none; }
+.link-title { font-size: calc(13px * var(--scale)); }
+.link-arrow { color: var(--accent); }
+
 /* ── DATE + CALENDAR ── */
 .date-card {
   padding: 64px 28px 56px;

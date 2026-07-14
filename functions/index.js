@@ -4,7 +4,6 @@ const { setGlobalOptions } = require('firebase-functions');
 const { onRequest } = require('firebase-functions/v2/https');
 const { initializeApp } = require('firebase-admin/app');
 const { getFirestore, Timestamp } = require('firebase-admin/firestore');
-const { getRemoteConfig } = require('firebase-admin/remote-config');
 const path = require('path');
 const fs = require('fs');
 
@@ -31,19 +30,6 @@ async function getInviteData() {
   }
 }
 
-async function getTemplateFromRemoteConfig() {
-  try {
-    const rc = getRemoteConfig();
-    const tmpl = await rc.getTemplate();
-    const param = tmpl.parameters['wedding_template'];
-    if (param?.defaultValue && 'value' in param.defaultValue) {
-      const value = param.defaultValue.value.trim().toLowerCase();
-      if (TEMPLATES.includes(value)) return value;
-    }
-  } catch {}
-  return null;
-}
-
 function parseCookies(header) {
   const cookies = {};
   if (!header) return cookies;
@@ -67,6 +53,7 @@ function buildInviteScript(data, template) {
     photos: { main: photos.mainByTemplate?.[template] ?? '', gallery: photos.gallery ?? [] },
     transport: data.transport ?? {},
     maps: data.maps ?? {},
+    links: data.links ?? [],
   };
   const json = JSON.stringify(invite, null, 2)
     .replace('"__DATE__', "new Date('")
@@ -122,10 +109,7 @@ function sendTemplate(template, invite, setCookie, res) {
 }
 
 exports.serve = onRequest(async (req, res) => {
-  const [invite, rcTemplate] = await Promise.all([
-    getInviteData(),
-    getTemplateFromRemoteConfig(),
-  ]);
+  const invite = await getInviteData();
 
   const queryT = req.query.t;
   if (queryT && TEMPLATES.includes(queryT)) {
@@ -138,6 +122,6 @@ exports.serve = onRequest(async (req, res) => {
     return sendTemplate(cookieT, invite, false, res);
   }
 
-  const assigned = rcTemplate ?? TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
+  const assigned = TEMPLATES[Math.floor(Math.random() * TEMPLATES.length)];
   sendTemplate(assigned, invite, true, res);
 });

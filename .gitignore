@@ -75,8 +75,9 @@ serviceAccountKey.json
 
 # Claude Code internal files
 .agents/
-.claude/
+# .claude/
 skills-lock.json
+.claude/pr-text.md
 
 # Functions 환경 변수 (실제 값은 커밋하지 않음)
 functions/.env

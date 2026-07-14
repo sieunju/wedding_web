@@ -18,6 +18,9 @@ const INVITE = window.INVITE || {
     ],
   },
   shareUrl: 'https://your-domain.com',
+  links: [
+    { title: '우리의 인스타그램', linkUrl: 'https://instagram.com' },
+  ],
   photos: {
     main: 'images/main.webp',
     gallery: [
@@ -385,6 +388,19 @@ function renderTransport() {
   ).join('');
 }
 
+function renderLinks() {
+  const root = $('[data-links]');
+  if (!root) return;
+  const links = (INVITE.links || []).filter(l => l && l.title && l.linkUrl);
+  if (!links.length) return;
+  root.innerHTML = links.map(l =>
+    `<a class="link-row" href="${l.linkUrl}" target="_blank" rel="noopener noreferrer">
+      <span class="link-title">${l.title}</span>
+      <span class="link-arrow" aria-hidden="true">→</span>
+    </a>`
+  ).join('');
+}
+
 function renderPhotos() {
   if (!INVITE.photos) return;
   const mainImg = $('[data-photo="main"]');
@@ -479,6 +495,7 @@ function init() {
   showTemplateIndicator();
   renderPhotos();
   renderTransport();
+  renderLinks();
   renderCalendar();
   renderParents();
   renderCountdown();

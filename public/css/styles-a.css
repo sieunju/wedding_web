@@ -610,6 +610,17 @@ svg { display: block; }
   line-height: 1.6;
 }
 
+.links { margin-top: 14px; }
+.link-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.link-title { font-size: calc(12px * var(--scale)); }
+.link-arrow { color: var(--accent); }
+
 /* ─────────────────────────────────────────────────────────────
    footer
    ───────────────────────────────────────────────────────────── */

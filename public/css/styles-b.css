@@ -645,7 +645,7 @@ body {
 .hero-script {
   font-family: var(--font-script);
   font-style: normal;
-  color: var(--accent);
+  color: #000;
   font-size: calc(22px * var(--scale));
 }
 .hero-names { font-family: var(--font-display); font-weight: 700; font-size: calc(34px * var(--scale)); }

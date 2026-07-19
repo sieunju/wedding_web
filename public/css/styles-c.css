@@ -87,13 +87,13 @@ img { display: block; max-width: 100%; }
 .hero-title {
   font-family: var(--font-serif);
   font-size: calc(48px * var(--scale));
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -1.5px;
   margin: 32px 0 28px;
 }
 .ht-line { display: block; }
-.ht-italic { font-style: italic; color: var(--accent); padding-left: 0; }
+.ht-italic { font-style: normal; font-weight: 800; color: var(--accent); padding-left: 0; }
 .ht-line:last-child { text-align: left; }
 
 .hero-photo {
@@ -422,15 +422,15 @@ img { display: block; max-width: 100%; }
 .foot-title {
   font-family: var(--font-serif);
   font-size: calc(40px * var(--scale));
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: -1px;
   line-height: 1.1;
   margin-bottom: 18px;
 }
 .foot-title .and {
-  font-style: italic;
+  font-style: normal;
   color: var(--accent);
-  font-weight: 400;
+  font-weight: 800;
   padding: 0 8px;
 }
 .foot-msg {

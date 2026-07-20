@@ -430,7 +430,7 @@ function setupGalleryViewer() {
   }
 
   viewer.addEventListener('click', e => {
-    if (e.target.dataset.close !== undefined) close();
+    if (e.target.closest('[data-close]')) close();
   });
 
   function touchDistance(touches) {

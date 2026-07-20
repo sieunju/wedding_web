@@ -154,43 +154,16 @@ function setupLargeText() {
   }
 }
 
-function formatYmd(d) {
-  return `${d.getFullYear()}. ${pad2(d.getMonth() + 1)}. ${pad2(d.getDate())}.`;
-}
-
 function setupShareSheet() {
-  const modal = $('#shareModal');
-  if (!modal) return;
-  const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
-  const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
-
-  $('#shareTopBtn')?.addEventListener('click', open);
-  $('#shareBottomBtn')?.addEventListener('click', open);
-  modal.addEventListener('click', e => { if (e.target.dataset.close !== undefined) close(); });
-
-  setText('#shareUrl', INVITE.shareUrl);
-
-  $('#copyUrlBtn')?.addEventListener('click', async (e) => {
+  async function copyShareUrl() {
     try {
       await navigator.clipboard.writeText(INVITE.shareUrl);
-      e.currentTarget.classList.add('copied');
-      e.currentTarget.textContent = '복사됨';
-      setTimeout(() => { e.currentTarget.classList.remove('copied'); e.currentTarget.textContent = 'URL 복사'; }, 1600);
+      showToast('청첩장 URL이 복사되었습니다');
     } catch { showToast('복사에 실패했습니다'); }
-  });
+  }
 
-  $$('.share-opt').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const kind = btn.dataset.share;
-      const title = `${INVITE.groom.name} ♡ ${INVITE.bride.name} 결혼합니다`;
-      const text = `${formatYmd(INVITE.date)} ${formatTimeKo(INVITE.date)}\n${INVITE.venue.name}`;
-      const url = INVITE.shareUrl;
-      if (kind === 'more' && navigator.share) { navigator.share({ title, text, url }).catch(() => {}); return; }
-      if (kind === 'sms') { window.location.href = `sms:?body=${encodeURIComponent(`${title}\n${text}\n${url}`)}`; return; }
-      if (kind === 'mail') { window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${text}\n\n${url}`)}`; return; }
-      if (kind === 'kakao') { showToast('카카오톡 공유는 카카오 SDK 연동 후 사용 가능합니다'); return; }
-    });
-  });
+  $('#shareTopBtn')?.addEventListener('click', copyShareUrl);
+  $('#shareBottomBtn')?.addEventListener('click', copyShareUrl);
 }
 
 function setupAddressCopy() {
@@ -232,13 +205,6 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
 }
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    const sm = $('#shareModal');
-    if (sm && !sm.hidden) { sm.hidden = true; document.body.style.overflow = ''; }
-  }
-});
 
 function renderAccounts() {
   const root = $('[data-accounts]');
@@ -428,9 +394,17 @@ function setupGalleryViewer() {
   ).join('');
   const dots = [...dotsEl.querySelectorAll('.gv-dot')];
 
+  let scale = 1;
+
+  function setScale(next) {
+    scale = Math.min(3, Math.max(1, next));
+    img.style.transform = scale === 1 ? '' : `scale(${scale})`;
+  }
+
   function show(idx) {
     current = (idx + gallery.length) % gallery.length;
     img.src = gallery[current];
+    setScale(1);
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
 
@@ -444,6 +418,7 @@ function setupGalleryViewer() {
     viewer.hidden = true;
     document.body.style.overflow = '';
     img.src = '';
+    setScale(1);
   }
 
   const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
@@ -454,16 +429,40 @@ function setupGalleryViewer() {
     });
   }
 
-  viewer.querySelector('.gv-prev').addEventListener('click', () => show(current - 1));
-  viewer.querySelector('.gv-next').addEventListener('click', () => show(current + 1));
-
   viewer.addEventListener('click', e => {
     if (e.target.dataset.close !== undefined) close();
   });
 
+  function touchDistance(touches) {
+    return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
+  }
+
   let tx = 0;
-  img.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  let pinching = false;
+  let pinchStartDist = 0;
+  let pinchStartScale = 1;
+
+  img.addEventListener('touchstart', e => {
+    if (e.touches.length === 2) {
+      pinching = true;
+      pinchStartDist = touchDistance(e.touches);
+      pinchStartScale = scale;
+    } else if (e.touches.length === 1) {
+      pinching = false;
+      tx = e.touches[0].clientX;
+    }
+  }, { passive: true });
+
+  img.addEventListener('touchmove', e => {
+    if (pinching && e.touches.length === 2) {
+      setScale(pinchStartScale * (touchDistance(e.touches) / pinchStartDist));
+    }
+  }, { passive: true });
+
   img.addEventListener('touchend', e => {
+    if (e.touches.length > 0) return;
+    if (pinching) { pinching = false; return; }
+    if (scale > 1) return;
     const dx = e.changedTouches[0].clientX - tx;
     if (Math.abs(dx) > 40) dx < 0 ? show(current + 1) : show(current - 1);
   }, { passive: true });

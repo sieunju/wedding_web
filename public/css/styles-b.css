@@ -471,47 +471,6 @@ img { display: block; max-width: 100%; }
   backdrop-filter: blur(2px);
   animation: fadeIn 0.2s ease-out;
 }
-.share-modal { align-items: flex-end; }
-.share-sheet {
-  position: relative; width: 100%; max-width: 460px;
-  background: var(--bg-base);
-  border-radius: 20px 20px 0 0;
-  padding: 12px 24px 36px;
-  animation: slideUp 0.25s ease-out;
-}
-.sheet-handle { width: 36px; height: 4px; background: var(--divider); border-radius: 2px; margin: 0 auto 18px; }
-.sheet-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
-.sheet-header h3 { font-family: var(--font-serif); font-size: 17px; font-weight: 500; color: var(--text-primary); }
-.sheet-close { width: 32px; height: 32px; font-size: 22px; color: var(--text-secondary); }
-.share-options { display: flex; gap: 12px; margin-bottom: 22px; }
-.share-opt { flex: 1; text-align: center; }
-.share-logo {
-  width: 52px; height: 52px; border-radius: 16px;
-  color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 18px; margin: 0 auto 8px;
-}
-.share-logo.kakao { background: #FEE500; color: #191919; }
-.share-logo.sms { background: #5AC8FA; }
-.share-logo.mail { background: #34C759; }
-.share-logo.more { background: var(--text-tertiary); }
-.share-label { font-size: 11px; color: var(--text-secondary); }
-.share-url {
-  display: flex; align-items: center; gap: 8px;
-  padding: 12px 16px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 4px;
-}
-.url-text {
-  flex: 1; font-family: var(--font-mono); font-size: 12px;
-  color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.url-copy {
-  padding: 6px 12px; border-radius: 999px;
-  background: var(--accent); color: #fff;
-  font-size: 12px; font-weight: 600;
-}
-.url-copy.copied { background: var(--text-primary); }
-
 .map-modal { align-items: center; padding: 20px; }
 .map-toast {
   position: relative; background: var(--bg-base);
@@ -728,27 +687,9 @@ body {
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
+  touch-action: none;
   pointer-events: auto;
 }
-.gv-prev,
-.gv-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 42px;
-  height: 42px;
-  font-size: 26px;
-  line-height: 1;
-  cursor: pointer;
-  z-index: 1;
-  pointer-events: auto;
-}
-.gv-prev { left: 12px; }
-.gv-next { right: 12px; }
 .gv-close {
   position: absolute;
   top: 16px;

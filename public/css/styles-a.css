@@ -995,15 +995,17 @@ body {
   justify-content: center;
   pointer-events: none;
 }
-.gv-img {
+.gv-swiper {
+  width: 92vw;
+  height: 80vh;
   max-width: 92vw;
   max-height: 80vh;
+  pointer-events: auto;
+}
+.gv-img {
   border-radius: 10px;
-  object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
-  touch-action: none;
-  pointer-events: auto;
 }
 .gv-close {
   position: absolute;

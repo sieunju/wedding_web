@@ -384,41 +384,48 @@ function renderPhotos() {
 function setupGalleryViewer() {
   const viewer = $('#galleryViewer');
   if (!viewer) return;
-  const img = viewer.querySelector('.gv-img');
+  const swiperEl = viewer.querySelector('.gv-swiper');
+  const wrapperEl = viewer.querySelector('.swiper-wrapper');
   const dotsEl = viewer.querySelector('.gv-dots');
   const gallery = INVITE.photos?.gallery || [];
-  let current = 0;
+  if (!swiperEl || !wrapperEl || !gallery.length) return;
+
+  wrapperEl.innerHTML = gallery.map(url =>
+    `<div class="swiper-slide"><div class="swiper-zoom-container"><img class="gv-img" src="${url}" alt="" loading="lazy" /></div></div>`
+  ).join('');
 
   dotsEl.innerHTML = gallery.map((_, i) =>
     `<span class="gv-dot${i === 0 ? ' active' : ''}"></span>`
   ).join('');
   const dots = [...dotsEl.querySelectorAll('.gv-dot')];
 
-  let scale = 1;
-
-  function setScale(next) {
-    scale = Math.min(3, Math.max(1, next));
-    img.style.transform = scale === 1 ? '' : `scale(${scale})`;
+  function updateDots(idx) {
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   }
 
-  function show(idx) {
-    current = (idx + gallery.length) % gallery.length;
-    img.src = gallery[current];
-    setScale(1);
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-  }
+  let swiper = null;
 
   function open(idx) {
-    show(idx);
     viewer.hidden = false;
     document.body.style.overflow = 'hidden';
+    if (!swiper) {
+      swiper = new Swiper(swiperEl, {
+        zoom: true,
+        loop: gallery.length > 2,
+        initialSlide: idx,
+        on: { slideChange: s => updateDots(s.realIndex) },
+      });
+    } else {
+      swiper.update();
+      swiper.params.loop ? swiper.slideToLoop(idx, 0) : swiper.slideTo(idx, 0);
+    }
+    updateDots(idx);
   }
 
   function close() {
+    if (swiper?.zoom) swiper.zoom.out();
     viewer.hidden = true;
     document.body.style.overflow = '';
-    img.src = '';
-    setScale(1);
   }
 
   const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
@@ -432,40 +439,6 @@ function setupGalleryViewer() {
   viewer.addEventListener('click', e => {
     if (e.target.closest('[data-close]')) close();
   });
-
-  function touchDistance(touches) {
-    return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
-  }
-
-  let tx = 0;
-  let pinching = false;
-  let pinchStartDist = 0;
-  let pinchStartScale = 1;
-
-  img.addEventListener('touchstart', e => {
-    if (e.touches.length === 2) {
-      pinching = true;
-      pinchStartDist = touchDistance(e.touches);
-      pinchStartScale = scale;
-    } else if (e.touches.length === 1) {
-      pinching = false;
-      tx = e.touches[0].clientX;
-    }
-  }, { passive: true });
-
-  img.addEventListener('touchmove', e => {
-    if (pinching && e.touches.length === 2) {
-      setScale(pinchStartScale * (touchDistance(e.touches) / pinchStartDist));
-    }
-  }, { passive: true });
-
-  img.addEventListener('touchend', e => {
-    if (e.touches.length > 0) return;
-    if (pinching) { pinching = false; return; }
-    if (scale > 1) return;
-    const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 40) dx < 0 ? show(current + 1) : show(current - 1);
-  }, { passive: true });
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !viewer.hidden) close(); });
 }

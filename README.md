@@ -334,6 +334,7 @@ wedding_web/
 │   │   └── styles-d.css
 │   ├── fonts/                # Pretendard WOFF2 자체 호스팅
 │   ├── images/               # 웨딩 사진 (.gitignore 포함)
+│   ├── vendor/swiper/        # SwiperJS 자체 호스팅 번들 (갤러리 뷰어)
 │   ├── main.js               # 공용 클라이언트 JS
 │   └── showcase.html         # 개발용 쇼케이스
 ├── scripts/
@@ -360,6 +361,7 @@ wedding_web/
 | Firebase Storage                | 이미지 CDN                  |
 | Pretendard (자체 호스팅 WOFF2)  | 한국어 웹폰트               |
 | HTML / CSS / Vanilla JS         | 빌드 툴 없음                |
+| SwiperJS (자체 호스팅, `public/vendor/swiper`) | 갤러리 뷰어 스와이프/핀치줌 |
 
 ---
 

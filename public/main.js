@@ -154,43 +154,16 @@ function setupLargeText() {
   }
 }
 
-function formatYmd(d) {
-  return `${d.getFullYear()}. ${pad2(d.getMonth() + 1)}. ${pad2(d.getDate())}.`;
-}
-
 function setupShareSheet() {
-  const modal = $('#shareModal');
-  if (!modal) return;
-  const open = () => { modal.hidden = false; document.body.style.overflow = 'hidden'; };
-  const close = () => { modal.hidden = true; document.body.style.overflow = ''; };
-
-  $('#shareTopBtn')?.addEventListener('click', open);
-  $('#shareBottomBtn')?.addEventListener('click', open);
-  modal.addEventListener('click', e => { if (e.target.dataset.close !== undefined) close(); });
-
-  setText('#shareUrl', INVITE.shareUrl);
-
-  $('#copyUrlBtn')?.addEventListener('click', async (e) => {
+  async function copyShareUrl() {
     try {
       await navigator.clipboard.writeText(INVITE.shareUrl);
-      e.currentTarget.classList.add('copied');
-      e.currentTarget.textContent = '복사됨';
-      setTimeout(() => { e.currentTarget.classList.remove('copied'); e.currentTarget.textContent = 'URL 복사'; }, 1600);
+      showToast('청첩장 URL이 복사되었습니다');
     } catch { showToast('복사에 실패했습니다'); }
-  });
+  }
 
-  $$('.share-opt').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const kind = btn.dataset.share;
-      const title = `${INVITE.groom.name} ♡ ${INVITE.bride.name} 결혼합니다`;
-      const text = `${formatYmd(INVITE.date)} ${formatTimeKo(INVITE.date)}\n${INVITE.venue.name}`;
-      const url = INVITE.shareUrl;
-      if (kind === 'more' && navigator.share) { navigator.share({ title, text, url }).catch(() => {}); return; }
-      if (kind === 'sms') { window.location.href = `sms:?body=${encodeURIComponent(`${title}\n${text}\n${url}`)}`; return; }
-      if (kind === 'mail') { window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${text}\n\n${url}`)}`; return; }
-      if (kind === 'kakao') { showToast('카카오톡 공유는 카카오 SDK 연동 후 사용 가능합니다'); return; }
-    });
-  });
+  $('#shareTopBtn')?.addEventListener('click', copyShareUrl);
+  $('#shareBottomBtn')?.addEventListener('click', copyShareUrl);
 }
 
 function setupAddressCopy() {
@@ -232,13 +205,6 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { el.hidden = true; }, 2200);
 }
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    const sm = $('#shareModal');
-    if (sm && !sm.hidden) { sm.hidden = true; document.body.style.overflow = ''; }
-  }
-});
 
 function renderAccounts() {
   const root = $('[data-accounts]');
@@ -418,32 +384,48 @@ function renderPhotos() {
 function setupGalleryViewer() {
   const viewer = $('#galleryViewer');
   if (!viewer) return;
-  const img = viewer.querySelector('.gv-img');
+  const swiperEl = viewer.querySelector('.gv-swiper');
+  const wrapperEl = viewer.querySelector('.swiper-wrapper');
   const dotsEl = viewer.querySelector('.gv-dots');
   const gallery = INVITE.photos?.gallery || [];
-  let current = 0;
+  if (!swiperEl || !wrapperEl || !gallery.length) return;
+
+  wrapperEl.innerHTML = gallery.map(url =>
+    `<div class="swiper-slide"><div class="swiper-zoom-container"><img class="gv-img" src="${url}" alt="" loading="lazy" /></div></div>`
+  ).join('');
 
   dotsEl.innerHTML = gallery.map((_, i) =>
     `<span class="gv-dot${i === 0 ? ' active' : ''}"></span>`
   ).join('');
   const dots = [...dotsEl.querySelectorAll('.gv-dot')];
 
-  function show(idx) {
-    current = (idx + gallery.length) % gallery.length;
-    img.src = gallery[current];
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  function updateDots(idx) {
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   }
 
+  let swiper = null;
+
   function open(idx) {
-    show(idx);
     viewer.hidden = false;
     document.body.style.overflow = 'hidden';
+    if (!swiper) {
+      swiper = new Swiper(swiperEl, {
+        zoom: true,
+        loop: gallery.length > 2,
+        initialSlide: idx,
+        on: { slideChange: s => updateDots(s.realIndex) },
+      });
+    } else {
+      swiper.update();
+      swiper.params.loop ? swiper.slideToLoop(idx, 0) : swiper.slideTo(idx, 0);
+    }
+    updateDots(idx);
   }
 
   function close() {
+    if (swiper?.zoom) swiper.zoom.out();
     viewer.hidden = true;
     document.body.style.overflow = '';
-    img.src = '';
   }
 
   const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
@@ -454,19 +436,9 @@ function setupGalleryViewer() {
     });
   }
 
-  viewer.querySelector('.gv-prev').addEventListener('click', () => show(current - 1));
-  viewer.querySelector('.gv-next').addEventListener('click', () => show(current + 1));
-
   viewer.addEventListener('click', e => {
-    if (e.target.dataset.close !== undefined) close();
+    if (e.target.closest('[data-close]')) close();
   });
-
-  let tx = 0;
-  img.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
-  img.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 40) dx < 0 ? show(current + 1) : show(current - 1);
-  }, { passive: true });
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !viewer.hidden) close(); });
 }

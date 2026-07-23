@@ -15,6 +15,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const { createRequire } = require('module');
 
 const dataFilePath = process.argv[2];
 if (!dataFilePath) {
@@ -31,21 +32,23 @@ if (!fs.existsSync(absolutePath)) {
 
 const raw = JSON.parse(fs.readFileSync(absolutePath, 'utf-8'));
 
-const admin = require('../functions/node_modules/firebase-admin');
+const functionsRequire = createRequire(path.resolve(__dirname, '../functions/package.json'));
+const { initializeApp } = functionsRequire('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = functionsRequire('firebase-admin/firestore');
 
 const keyPath = path.resolve(__dirname, '../serviceAccountKey.json');
 if (!process.env.GOOGLE_APPLICATION_CREDENTIALS && fs.existsSync(keyPath)) {
   process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
 }
 
-admin.initializeApp();
-const db = admin.firestore();
+initializeApp();
+const db = getFirestore();
 
 async function upload() {
   const data = {
     ...raw,
-    date: admin.firestore.Timestamp.fromDate(new Date(raw.date)),
-    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    date: Timestamp.fromDate(new Date(raw.date)),
+    updatedAt: FieldValue.serverTimestamp(),
   };
 
   await db.doc('invitations/main').set(data, { merge: true });

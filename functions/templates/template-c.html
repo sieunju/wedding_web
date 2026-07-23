@@ -13,6 +13,7 @@
 <meta property="og:type" content="website" />
 <link rel="stylesheet" href="/fonts/pretendard.css" />
 <link rel="stylesheet" href="/css/styles-c.css" />
+<link rel="stylesheet" href="/vendor/swiper/swiper-bundle.min.css" />
 <script>
 window.INVITE = {
   groom: { name: '홍길동', father: '홍판서', mother: '김춘섬', order: '장남' },
@@ -215,24 +216,6 @@ window.INVITE = {
   </footer>
 </div>
 
-<div class="modal share-modal" id="shareModal" hidden>
-  <div class="modal-overlay" data-close></div>
-  <div class="share-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header"><h3>공유하기</h3><button class="sheet-close" type="button" data-close>×</button></div>
-    <div class="share-options">
-      <button class="share-opt" type="button" data-share="kakao"><div class="share-logo kakao">K</div><div class="share-label">카카오톡</div></button>
-      <button class="share-opt" type="button" data-share="sms"><div class="share-logo sms">Msg</div><div class="share-label">문자</div></button>
-      <button class="share-opt" type="button" data-share="mail"><div class="share-logo mail">@</div><div class="share-label">메일</div></button>
-      <button class="share-opt" type="button" data-share="more"><div class="share-logo more">···</div><div class="share-label">더보기</div></button>
-    </div>
-    <div class="share-url">
-      <div class="url-text" id="shareUrl">https://your-domain.com</div>
-      <button class="url-copy" id="copyUrlBtn" type="button">복사</button>
-    </div>
-  </div>
-</div>
-
 <div class="modal map-modal" id="mapModal" hidden>
   <div class="modal-overlay" data-close></div>
   <div class="map-toast">
@@ -257,13 +240,14 @@ window.INVITE = {
     <button class="gv-close" type="button" data-close aria-label="닫기">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
-    <button class="gv-prev" type="button" aria-label="이전">&#8249;</button>
-    <img class="gv-img" src="" alt="" />
-    <button class="gv-next" type="button" aria-label="다음">&#8250;</button>
+    <div class="gv-swiper swiper">
+      <div class="swiper-wrapper"></div>
+    </div>
     <div class="gv-dots"></div>
   </div>
 </div>
 
+<script src="/vendor/swiper/swiper-bundle.min.js"></script>
 <script src="/main.js"></script>
 </body>
 </html>

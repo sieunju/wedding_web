@@ -375,9 +375,24 @@ function renderPhotos() {
   if (!gallery.length) return;
   const container = $('.gallery-grid-9, .gallery-grid, .g-grid-9, .g-grid');
   if (!container) return;
-  container.innerHTML = gallery.map((url, i) =>
-    `<img src="${url}" alt="" loading="lazy" data-gallery-index="${i}" />`
-  ).join('');
+
+  // 기존 <img> 요소(및 템플릿별 레이아웃 클래스)를 재사용하고,
+  // 실제 업로드된 사진 수에 맞춰 슬롯을 추가/제거한다.
+  const slots = [...container.children];
+  gallery.forEach((url, i) => {
+    let img = slots[i];
+    if (!img) {
+      img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = '';
+      container.appendChild(img);
+    }
+    img.src = url;
+    img.dataset.galleryIndex = i;
+  });
+  slots.slice(gallery.length).forEach(el => el.remove());
+
+  setText('[data-gallery-count]', String(gallery.length));
   setupGalleryViewer();
 }
 

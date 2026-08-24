@@ -196,6 +196,57 @@ function setupMapLinks() {
   });
 }
 
+function icsDate(d) {
+  return d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+}
+
+function icsEscape(text) {
+  return String(text).replace(/[\\,;]/g, m => '\\' + m).replace(/\n/g, '\\n');
+}
+
+function setupCalendarLinks() {
+  const btns = $$('[data-cal]');
+  if (!btns.length) return;
+  const start = INVITE.date;
+  const end = new Date(start.getTime() + 2 * 60 * 60 * 1000); // 예식 2시간 가정
+  const title = `${INVITE.groom.name} ♡ ${INVITE.bride.name} 결혼식`;
+  const location = `${INVITE.venue.name} ${INVITE.venue.hall} ${INVITE.venue.address}`;
+  const details = `${INVITE.venue.name} ${INVITE.venue.hall}에서 열리는 결혼식에 초대합니다.`;
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.dataset.cal === 'google') {
+        const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${icsDate(start)}/${icsDate(end)}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`;
+        window.open(url, '_blank');
+      } else if (btn.dataset.cal === 'ics') {
+        const ics = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//wedding-web//invite//KO',
+          'BEGIN:VEVENT',
+          `UID:${Date.now()}@wedding-web`,
+          `DTSTAMP:${icsDate(new Date())}`,
+          `DTSTART:${icsDate(start)}`,
+          `DTEND:${icsDate(end)}`,
+          `SUMMARY:${icsEscape(title)}`,
+          `DESCRIPTION:${icsEscape(details)}`,
+          `LOCATION:${icsEscape(location)}`,
+          'END:VEVENT',
+          'END:VCALENDAR',
+        ].join('\r\n');
+        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'invite.ics';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(a.href);
+      }
+    });
+  });
+}
+
 let toastTimer = null;
 function showToast(msg) {
   const el = $('#toast');
@@ -491,6 +542,7 @@ function init() {
   setupShareSheet();
   setupAddressCopy();
   setupMapLinks();
+  setupCalendarLinks();
   renderAccounts();
   function armScrollFX() { setupHeroIntro(); setupReveal(); setupParallax(); }
   if (PREFERS_REDUCE) {

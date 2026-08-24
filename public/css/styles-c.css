@@ -364,6 +364,20 @@ img { display: block; max-width: 100%; }
   border-right: 1px solid var(--border);
 }
 .map-btn:last-child { border-right: none; }
+.cal-row {
+  display: flex; gap: 0; margin-top: 22px;
+  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+}
+.cal-btn {
+  flex: 1;
+  padding: 14px 6px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 13px;
+}
+.cal-btn:last-child { border-right: none; }
 .map-btn .logo {
   width: 24px; height: 24px;
   display: inline-flex; align-items: center; justify-content: center;

@@ -404,6 +404,14 @@ img { display: block; max-width: 100%; }
   transition: background 0.18s;
 }
 .map-btn:hover { background: var(--surface); }
+.cal-row { display: flex; gap: 10px; margin-top: 14px; }
+.cal-btn {
+  flex: 1; padding: 12px 6px; border-radius: 8px;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-primary); font-size: 13px;
+  transition: background 0.18s;
+}
+.cal-btn:hover { background: var(--surface); }
 .map-btn .logo {
   width: 36px; height: 36px; border-radius: 10px;
   display: inline-flex; align-items: center; justify-content: center;
@@ -643,6 +651,7 @@ body {
 .venue-name { font-family: var(--font-display); font-weight: 700; }
 .map { border-radius: 18px; border: 2px dashed var(--divider); }
 .map-btn { border-radius: 16px; border: 2px solid var(--border); }
+.cal-btn { border-radius: 16px; border: 2px solid var(--border); }
 .map-btn .logo { border-radius: 12px; }
 
 /* gallery — scrapbook photos (white frame + tilt) */

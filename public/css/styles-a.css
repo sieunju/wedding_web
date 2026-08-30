@@ -558,6 +558,24 @@ svg { display: block; }
 }
 .map-btn:hover { background: #fff; }
 .map-btn:active { transform: scale(0.97); }
+.cal-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.cal-btn {
+  flex: 1;
+  padding: 12px 10px;
+  border-radius: 8px;
+  background: var(--bg-base);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  transition: transform 0.15s, background 0.18s;
+}
+.cal-btn:hover { background: #fff; }
+.cal-btn:active { transform: scale(0.97); }
 .map-btn .logo {
   width: 38px;
   height: 38px;
@@ -961,6 +979,7 @@ body {
 /* map + pills — round + pastel */
 .map { border-radius: 22px; border: 2px solid var(--border); }
 .map-btn { border-radius: 18px; border: 2px solid var(--border); background: #fff; }
+.cal-btn { border-radius: 18px; border: 2px solid var(--border); background: #fff; }
 .map-btn .logo { border-radius: 14px; }
 .address-copy { border: 1.5px solid var(--border); }
 .gallery-grid-9 img { border-radius: 14px; }

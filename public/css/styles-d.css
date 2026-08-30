@@ -321,6 +321,20 @@ img { display: block; max-width: 100%; }
   color: var(--text-primary);
 }
 .map-btn:last-child { border-right: 1px solid var(--border-strong); }
+.cal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 14px;
+  gap: 8px;
+}
+.cal-btn {
+  padding: 12px 6px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 13px;
+}
 .map-btn .logo {
   width: 24px; height: 24px;
   display: inline-flex; align-items: center; justify-content: center;

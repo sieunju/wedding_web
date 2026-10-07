@@ -499,7 +499,7 @@ function WeddingInvite() {
     try { return localStorage.getItem('wedding.largeText') === 'true'; } catch { return false; }
   });
   const [shareOpen, setShareOpen] = useState(false);
-  const scale = largeText ? 1.28 : 1.0;
+  const scale = largeText ? 1.45 : 1.0;
 
   useEffect(() => {
     try { localStorage.setItem('wedding.largeText', largeText); } catch {}

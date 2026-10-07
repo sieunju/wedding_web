@@ -149,7 +149,7 @@ function setupLargeText() {
   apply();
   btn.addEventListener('click', () => { on = !on; localStorage.setItem(KEY, on ? '1' : '0'); apply(); });
   function apply() {
-    document.documentElement.style.setProperty('--scale', on ? '1.28' : '1');
+    document.documentElement.style.setProperty('--scale', on ? '1.45' : '1');
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
 }

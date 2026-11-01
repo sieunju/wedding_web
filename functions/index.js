@@ -108,8 +108,24 @@ function sendTemplate(template, invite, setCookie, res) {
   }
 }
 
+// 결혼식 당일(KST)이 지났으면 true
+function isAfterWeddingDay(invite) {
+  if (!invite?.date) return false;
+  const toKstDate = (d) => new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(d);
+  return toKstDate(new Date()) > toKstDate(new Date(invite.date));
+}
+
+function sendThanks(res) {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.sendFile(path.join(__dirname, 'templates', 'thanks.html'));
+}
+
 exports.serve = onRequest(async (req, res) => {
   const invite = await getInviteData();
+
+  if (isAfterWeddingDay(invite)) {
+    return sendThanks(res);
+  }
 
   const queryT = req.query.t;
   if (queryT && TEMPLATES.includes(queryT)) {

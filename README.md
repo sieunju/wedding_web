@@ -20,6 +20,7 @@
 - **Firestore** 에서 청첩장 데이터 실시간 주입 — 코드 수정 없이 데이터만 교체
 - 계좌번호 복사, 네이버·카카오·티맵 지도 링크, 공유 시트, 큰글씨 모드
 - **카카오톡·문자 공유 미리보기(OG 태그) 자동 생성** — 신랑·신부 이름, 예식 날짜·장소, 대표 사진을 서버에서 주입
+- **예식 이후 감사 인사 페이지** — 예식 다음 날(한국 시간 0시)부터 청첩장 대신 "와주셔서 감사합니다." 페이지 자동 표시 (`functions/templates/thanks.html`)
 - **Pretendard** 자체 호스팅 — Google Fonts 외부 의존 없음
 - 빌드 툴 없음 — 순수 HTML / CSS / Vanilla JS
 
@@ -307,11 +308,14 @@ firebase deploy --only hosting     # 정적 파일(CSS/JS) 변경 시
 
 방문자에게 템플릿이 배정되는 우선순위:
 
+0. 예식 다음 날(한국 시간 0시)부터는 아래 규칙과 상관없이 감사 인사 페이지(`thanks.html`)를 표시
 1. URL 파라미터 `?t=a` (미리보기·테스트용)
 2. 쿠키 `wt` (이전 방문 시 배정된 템플릿, 30일 유지)
 3. 위 두 가지가 없으면 `a`/`b`/`c`/`d` 중 하나를 균등 확률(각 25%)로 무작위 배정 후 쿠키에 저장
 
 같은 방문자는 쿠키가 살아있는 동안(30일) 항상 같은 템플릿을 보게 되며, 쿠키가 만료되거나 삭제되면 다시 무작위로 배정됩니다. 특정 템플릿만 테스트하고 싶다면 `?t=a`처럼 URL 파라미터로 강제 지정하세요.
+
+> 감사 인사 페이지는 Firestore의 `date` 값을 기준으로 판단하므로 별도 설정이 필요 없습니다. 문구를 바꾸려면 `functions/templates/thanks.html`을 수정하세요. 예식 전에 로컬에서 확인하려면 `functions/index.js`의 `isAfterWeddingDay` 함수가 임시로 `true`를 반환하도록 바꾼 뒤 에뮬레이터를 실행하세요.
 
 ---
 
@@ -325,7 +329,8 @@ wedding_web/
 │       ├── template-a.html   # Minimal
 │       ├── template-b.html   # Botanical
 │       ├── template-c.html   # Editorial
-│       └── template-d.html   # Midnight
+│       ├── template-d.html   # Midnight
+│       └── thanks.html       # 예식 이후 감사 인사 페이지
 ├── public/
 │   ├── css/
 │   │   ├── styles-a.css
